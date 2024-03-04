@@ -188,6 +188,7 @@ public class QuorumPeerMain {
             quorumPeer.setInitLimit(config.getInitLimit());
             quorumPeer.setSyncLimit(config.getSyncLimit());
             quorumPeer.setConnectToLearnerMasterLimit(config.getConnectToLearnerMasterLimit());
+            //当配置了observerMasterPort
             quorumPeer.setObserverMasterPort(config.getObserverMasterPort());
             quorumPeer.setConfigFileName(config.getConfigFilename());
             quorumPeer.setClientPortListenBacklog(config.getClientPortListenBacklog());

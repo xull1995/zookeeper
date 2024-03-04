@@ -304,6 +304,7 @@ public class QuorumPeerConfig {
             } else if (key.equals("secureClientPortAddress")) {
                 secureClientPortAddress = value.trim();
             } else if (key.equals("observerMasterPort")) {
+                //
                 observerMasterPort = Integer.parseInt(value);
             } else if (key.equals("clientPortListenBacklog")) {
                 clientPortListenBacklog = Integer.parseInt(value);

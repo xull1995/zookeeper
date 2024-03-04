@@ -111,6 +111,8 @@ public class Follower extends Learner {
                     long syncTime = Time.currentElapsedTime() - startTime;
                     ServerMetrics.getMetrics().FOLLOWER_SYNC_TIME.add(syncTime);
                 }
+                //当定义了ObserverMasterPort，Follower开启监听端口，实现observer通过follower节点获取信息，
+                // 而不需要从leader获取信息，减少leader压力
                 if (self.getObserverMasterPort() > 0) {
                     LOG.info("Starting ObserverMaster");
 
