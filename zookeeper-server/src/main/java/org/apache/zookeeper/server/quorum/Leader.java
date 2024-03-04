@@ -1419,6 +1419,7 @@ public class Leader extends LearnerMaster {
                     timeStartWaitForEpoch = start;
                 }
                 long cur = start;
+                //超时时间
                 long end = start + self.getInitLimit() * self.getTickTime();
                 while (waitingForNewEpoch && cur < end && !quitWaitForEpoch) {
                     connectingFollowers.wait(end - cur);
@@ -1467,6 +1468,7 @@ public class Leader extends LearnerMaster {
             } else {
                 long start = Time.currentElapsedTime();
                 long cur = start;
+                //超时时间
                 long end = start + self.getInitLimit() * self.getTickTime();
                 while (!electionFinished && cur < end) {
                     electingFollowers.wait(end - cur);
@@ -1578,6 +1580,7 @@ public class Leader extends LearnerMaster {
             } else {
                 long start = Time.currentElapsedTime();
                 long cur = start;
+                //超时时间
                 long end = start + self.getInitLimit() * self.getTickTime();
                 while (!quorumFormed && cur < end) {
                     newLeaderProposal.qvAcksetPairs.wait(end - cur);

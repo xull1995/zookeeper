@@ -183,6 +183,7 @@ public class QuorumPeerMain {
             //quorumPeer.setQuorumPeers(config.getAllMembers());
             quorumPeer.setElectionType(config.getElectionAlg());
             quorumPeer.setMyid(config.getServerId());
+            //
             quorumPeer.setTickTime(config.getTickTime());
             quorumPeer.setMinSessionTimeout(config.getMinSessionTimeout());
             quorumPeer.setMaxSessionTimeout(config.getMaxSessionTimeout());

@@ -79,6 +79,7 @@ public class QuorumPeerConfig {
     protected File dataLogDir;
     protected String dynamicConfigFileStr = null;
     protected String configFileStr = null;
+    //默认3000ms
     protected int tickTime = ZooKeeperServer.DEFAULT_TICK_TIME;
     protected int maxClientCnxns = 60;
     /** defaults to -1 if not set explicitly */
@@ -309,6 +310,7 @@ public class QuorumPeerConfig {
             } else if (key.equals("clientPortListenBacklog")) {
                 clientPortListenBacklog = Integer.parseInt(value);
             } else if (key.equals("tickTime")) {
+                //zk 基本时间单位，用于调节心跳和超时等
                 tickTime = Integer.parseInt(value);
             } else if (key.equals("maxClientCnxns")) {
                 maxClientCnxns = Integer.parseInt(value);
