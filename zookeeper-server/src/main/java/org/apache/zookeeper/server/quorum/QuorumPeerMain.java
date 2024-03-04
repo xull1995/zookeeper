@@ -169,6 +169,7 @@ public class QuorumPeerMain {
                 cnxnFactory.configure(config.getClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), false);
             }
 
+            //创建ssl 连接工厂
             if (config.getSecureClientPortAddress() != null) {
                 secureCnxnFactory = ServerCnxnFactory.createFactory();
                 secureCnxnFactory.configure(config.getSecureClientPortAddress(), config.getMaxClientCnxns(), config.getClientPortListenBacklog(), true);

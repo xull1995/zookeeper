@@ -465,6 +465,7 @@ public class QuorumPeerConfig {
             LOG.info("clientPortAddress is {}", formatInetAddr(this.clientPortAddress));
         }
 
+        //定义ssl端口，默认2281
         if (secureClientPort == 0) {
             LOG.info("secureClientPort is not set");
             if (secureClientPortAddress != null) {
@@ -474,6 +475,7 @@ public class QuorumPeerConfig {
             this.secureClientPortAddress = new InetSocketAddress(InetAddress.getByName(secureClientPortAddress), secureClientPort);
             LOG.info("secureClientPortAddress is {}", formatInetAddr(this.secureClientPortAddress));
         } else {
+            //
             this.secureClientPortAddress = new InetSocketAddress(secureClientPort);
             LOG.info("secureClientPortAddress is {}", formatInetAddr(this.secureClientPortAddress));
         }

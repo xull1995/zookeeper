@@ -597,6 +597,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
         initMaxCnxns();
         localAddress = addr;
         this.maxClientCnxns = maxClientCnxns;
+        //netty可以定义ssl安全连接
         this.secure = secure;
         this.listenBacklog = backlog;
     }
