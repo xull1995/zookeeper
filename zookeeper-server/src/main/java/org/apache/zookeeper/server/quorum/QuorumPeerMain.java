@@ -80,6 +80,7 @@ public class QuorumPeerMain {
     protected QuorumPeer quorumPeer;
 
     /**
+     * 集群版zk启动入口
      * To start the replicated server specify the configuration file name on
      * the command line.
      * @param args path to the configfile
