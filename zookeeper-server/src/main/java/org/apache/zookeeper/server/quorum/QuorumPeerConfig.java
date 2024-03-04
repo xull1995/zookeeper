@@ -445,9 +445,11 @@ public class QuorumPeerConfig {
             snapRetainCount = MIN_SNAP_RETAIN_COUNT;
         }
 
+        //dataDir必填
         if (dataDir == null) {
             throw new IllegalArgumentException("dataDir is not set");
         }
+        //dataLogDir未填，则使用dataDir
         if (dataLogDir == null) {
             dataLogDir = dataDir;
         }
