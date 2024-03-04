@@ -166,6 +166,7 @@ public class QuorumPeerConfig {
     }
 
     /**
+     * 解析zk 参数
      * Parse a ZooKeeper configuration file
      * @param path the patch of the configuration file
      * @throws ConfigException error processing configuration
@@ -406,6 +407,9 @@ public class QuorumPeerConfig {
             } else if (key.equals("multiAddress.reachabilityCheckEnabled")) {
                 multiAddressReachabilityCheckEnabled = Boolean.parseBoolean(value);
             } else {
+                //其他定义在zoo.cfg中的配置，都将通过增加前缀写到SystemProperty
+                //需要注意的是：（1）这类参数不能在zoo.cfg中增加前缀zookeeper.，否则会失效
+                //（2）个别参数不支持zoo.cfg中配置，也不能被这里兜底，比如jute.maxbuffer，只能通过jvm -D处理
                 System.setProperty("zookeeper." + key, value);
             }
         }
