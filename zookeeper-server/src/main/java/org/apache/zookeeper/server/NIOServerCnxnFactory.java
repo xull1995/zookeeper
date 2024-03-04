@@ -631,6 +631,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
 
     @Override
     public void configure(InetSocketAddress addr, int maxcc, int backlog, boolean secure) throws IOException {
+        //可以看出，安全端口不可以用于 NIOServerCnxn ，只能netty
         if (secure) {
             throw new UnsupportedOperationException("SSL isn't supported in NIOServerCnxn");
         }
@@ -671,6 +672,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         listenBacklog = backlog;
         this.ss = ServerSocketChannel.open();
         ss.socket().setReuseAddress(true);
+        //监听指定端口
         LOG.info("binding to port {}", addr);
         if (listenBacklog == -1) {
             ss.socket().bind(addr);

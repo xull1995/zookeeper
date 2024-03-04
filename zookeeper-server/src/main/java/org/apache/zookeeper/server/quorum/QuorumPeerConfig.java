@@ -460,6 +460,7 @@ public class QuorumPeerConfig {
             this.clientPortAddress = new InetSocketAddress(InetAddress.getByName(clientPortAddress), clientPort);
             LOG.info("clientPortAddress is {}", formatInetAddr(this.clientPortAddress));
         } else {
+            //通过本地网卡ip以及zoo.cfg中定义的clientPort，创建socket
             this.clientPortAddress = new InetSocketAddress(clientPort);
             LOG.info("clientPortAddress is {}", formatInetAddr(this.clientPortAddress));
         }
