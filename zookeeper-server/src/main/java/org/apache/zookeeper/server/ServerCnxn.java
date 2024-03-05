@@ -209,7 +209,9 @@ public abstract class ServerCnxn implements Stats, Watcher {
             Counter cacheHit = null, cacheMiss = null;
             switch (opCode) {
                 case OpCode.getData : {
+                    //缓存getData操作
                     cache = zkServer.getReadResponseCache();
+                    //可通过这个监控指标进行优化
                     cacheHit = ServerMetrics.getMetrics().RESPONSE_PACKET_CACHE_HITS;
                     cacheMiss = ServerMetrics.getMetrics().RESPONSE_PACKET_CACHE_MISSING;
                     break;
