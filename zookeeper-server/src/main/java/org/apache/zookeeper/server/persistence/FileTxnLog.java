@@ -111,6 +111,7 @@ public class FileTxnLog implements TxnLog, Closeable {
     private static final long fsyncWarningThresholdMS;
 
     /**
+     * 虽然是个文件大小限制，但并不是说文件大小不会超过zookeeper.txnLogSizeLimitInKb。
      * This parameter limit the size of each txnlog to a given limit (KB).
      * It does not affect how often the system will take a snapshot [zookeeper.snapCount]
      * We roll the txnlog when either of the two limits are reached.
@@ -422,11 +423,13 @@ public class FileTxnLog implements TxnLog, Closeable {
         }
 
         // Roll the log file if we exceed the size limit
+        //当设定了txnLogSizeLimit
         if (txnLogSizeLimit > 0) {
             long logSize = getCurrentLogSize();
 
             if (logSize > txnLogSizeLimit) {
                 LOG.debug("Log size limit reached: {}", logSize);
+                //需要滚动日志
                 rollLog();
             }
         }
