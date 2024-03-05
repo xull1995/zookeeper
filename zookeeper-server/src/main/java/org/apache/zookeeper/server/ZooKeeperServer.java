@@ -1181,10 +1181,12 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             // snapCount must be 2 or more. See org.apache.zookeeper.server.SyncRequestProcessor
             if (snapCount < 2) {
                 LOG.warn("SnapCount should be 2 or more. Now, snapCount is reset to 2");
+                //最小为2
                 snapCount = 2;
             }
             return snapCount;
         } catch (Exception e) {
+            //默认值
             return 100000;
         }
     }

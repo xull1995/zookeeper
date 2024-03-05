@@ -140,6 +140,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
         snapSizeInBytes = size;
     }
 
+    //是否需要执行快照操作
     private boolean shouldSnapshot() {
         int logCount = zks.getZKDatabase().getTxnCount();
         long logSize = zks.getZKDatabase().getTxnSize();
@@ -147,6 +148,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
                || (snapSizeInBytes > 0 && logSize > (snapSizeInBytes / 2 + randSize));
     }
 
+    //重置
     private void resetSnapshotStats() {
         randRoll = ThreadLocalRandom.current().nextInt(snapCount / 2);
         randSize = Math.abs(ThreadLocalRandom.current().nextLong() % (snapSizeInBytes / 2));
