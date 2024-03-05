@@ -132,9 +132,11 @@ public class ZKDatabase {
         LOG.info("{} = {}", SNAPSHOT_SIZE_FACTOR, snapshotSizeFactor);
 
         try {
+            //默认500
             commitLogCount = Integer.parseInt(
                     System.getProperty(COMMIT_LOG_COUNT,
                             Integer.toString(DEFAULT_COMMIT_LOG_COUNT)));
+            //最小值500
             if (commitLogCount < DEFAULT_COMMIT_LOG_COUNT) {
                 commitLogCount = DEFAULT_COMMIT_LOG_COUNT;
                 LOG.warn(

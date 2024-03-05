@@ -1204,6 +1204,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     }
 
     public static long getSnapSizeInBytes() {
+        //快照文件大小
         long size = Long.getLong("zookeeper.snapSizeLimitInKb", 4194304L); // 4GB by default
         if (size <= 0) {
             LOG.info("zookeeper.snapSizeLimitInKb set to a non-positive value {}; disabling feature", size);
