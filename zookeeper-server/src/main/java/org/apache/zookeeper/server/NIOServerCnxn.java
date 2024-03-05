@@ -406,6 +406,7 @@ public class NIOServerCnxn extends ServerCnxn {
     //
     // Don't support wait disable receive in NIO, ignore the parameter
     public void disableRecv(boolean waitDisableRecv) {
+        //开启拒绝接收客户端请求，将throttled状态值修改
         if (throttled.compareAndSet(false, true)) {
             requestInterestOpsUpdate();
         }

@@ -165,6 +165,9 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
     @Override
     public int getGlobalOutstandingLimit() {
         int divisor = self.getQuorumSize() > 2 ? self.getQuorumSize() - 1 : 1;
+        //这里看出，并不是直接返回GlobalOutstandingLimit定义的值
+        //因为这是全局的参数，所以其对每个服务节点做了简单的分配，
+        //
         int globalOutstandingLimit = super.getGlobalOutstandingLimit() / divisor;
         return globalOutstandingLimit;
     }

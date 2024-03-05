@@ -1195,6 +1195,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         try {
             limit = Integer.parseInt(sc);
         } catch (Exception e) {
+            //默认1000
             limit = 1000;
         }
         return limit;
@@ -1460,9 +1461,15 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         }
     }
 
+    //是否限流
     public boolean shouldThrottle(long outStandingCount) {
         int globalOutstandingLimit = getGlobalOutstandingLimit();
+        //getInflight()获取的是：当前时间点，已经接收但还未处理的请求数量
+        //etInProcess()获取的是：当前时间点，正在处理链路中处理的请求数量
         if (globalOutstandingLimit < getInflight() || globalOutstandingLimit < getInProcess()) {
+            //虽然某个节点可能出现请求数以及超过globalOutstandingLimit，
+            // 但是为了避免后续的客户端无法发起请求，这里使用了outStandingCount，保证每个客户端至少有一个请求被处理
+            //即globalOutstandingLimit不是硬限制
             return outStandingCount > 0;
         }
         return false;
