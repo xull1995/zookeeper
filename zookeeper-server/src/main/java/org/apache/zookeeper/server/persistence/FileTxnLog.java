@@ -294,6 +294,7 @@ public class FileTxnLog implements TxnLog, Closeable {
             filePadding.setCurrentSize(fos.getChannel().position());
             streamsToFlush.add(fos);
         }
+        //优化WAL：通过File Padding机制，预先为WAL 分配block，避免因为事务日志文件没空间，导致文件系统需要阻塞更新inode信息
         filePadding.padFile(fos.getChannel());
         byte[] buf = Util.marshallTxnEntry(hdr, txn, digest);
         if (buf == null || buf.length == 0) {

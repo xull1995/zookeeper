@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 public class FilePadding {
 
     private static final Logger LOG;
+    //默认64Mb
     private static long preAllocSize = 65536 * 1024;
     private static final ByteBuffer fill = ByteBuffer.allocateDirect(1);
 
@@ -36,6 +37,7 @@ public class FilePadding {
         String size = System.getProperty("zookeeper.preAllocSize");
         if (size != null) {
             try {
+                //单位kb
                 preAllocSize = Long.parseLong(size) * 1024;
             } catch (NumberFormatException e) {
                 LOG.warn("{} is not a valid value for preAllocSize", size);
@@ -73,6 +75,7 @@ public class FilePadding {
      * @throws IOException
      */
     long padFile(FileChannel fileChannel) throws IOException {
+        //
         long newFileSize = calculateFileSizeWithPadding(fileChannel.position(), currentSize, preAllocSize);
         if (currentSize != newFileSize) {
             fileChannel.write((ByteBuffer) fill.position(0), newFileSize - fill.remaining());
@@ -95,6 +98,7 @@ public class FilePadding {
     // VisibleForTesting
     public static long calculateFileSizeWithPadding(long position, long fileSize, long preAllocSize) {
         // If preAllocSize is positive and we are within 4KB of the known end of the file calculate a new file size
+        //文件剩余磁盘空间不足4kb时，需要进行file padding
         if (preAllocSize > 0 && position + 4096 >= fileSize) {
             // If we have written more than we have previously preallocated we need to make sure the new
             // file size is larger than what we already have
