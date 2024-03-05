@@ -125,6 +125,7 @@ public class QuorumPeerMain {
             config.parse(args[0]);
         }
 
+        //Datadir 清理管理器
         // Start and schedule the the purge task
         DatadirCleanupManager purgeMgr = new DatadirCleanupManager(
             config.getDataDir(),

@@ -82,6 +82,7 @@ public class PurgeTxnLog {
         List<File> snaps = txnLog.findNValidSnapshots(num);
         int numSnaps = snaps.size();
         if (numSnaps > 0) {
+            //情况旧的快照文件、事务日志文件
             purgeOlderSnapshots(txnLog, snaps.get(numSnaps - 1));
         }
     }
@@ -134,6 +135,7 @@ public class PurgeTxnLog {
             }
 
         }
+        //过滤
         // add all non-excluded log files
         File[] logs = txnLog.getDataDir().listFiles(new MyFileFilter(PREFIX_LOG));
         List<File> files = new ArrayList<>();
@@ -141,6 +143,7 @@ public class PurgeTxnLog {
             files.addAll(Arrays.asList(logs));
         }
 
+        //过滤
         // add all non-excluded snapshot files to the deletion list
         File[] snapshots = txnLog.getSnapDir().listFiles(new MyFileFilter(PREFIX_SNAPSHOT));
         if (snapshots != null) {
