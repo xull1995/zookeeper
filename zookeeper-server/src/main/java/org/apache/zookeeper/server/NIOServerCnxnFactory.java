@@ -640,6 +640,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         }
         configureSaslLogin();
 
+        //设置maxClientCnxns
         maxClientCnxns = maxcc;
         initMaxCnxns();
         sessionlessCnxnTimeout = Integer.getInteger(ZOOKEEPER_NIO_SESSIONLESS_CNXN_TIMEOUT, 10000);

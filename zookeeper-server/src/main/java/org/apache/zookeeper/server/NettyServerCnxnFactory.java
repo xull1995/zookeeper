@@ -110,6 +110,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
     private final ServerBootstrap bootstrap;
     private Channel parentChannel;
     private final ChannelGroup allChannels = new DefaultChannelGroup("zkServerCnxns", new DefaultEventExecutor());
+    //用于实现限制每个客户端ip能够建立的最大连接数
     private final Map<InetAddress, AtomicInteger> ipMap = new ConcurrentHashMap<>();
     private InetSocketAddress localAddress;
     private int maxClientCnxns = 60;
@@ -216,6 +217,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
                 return;
             }
             InetAddress addr = ((InetSocketAddress) channel.remoteAddress()).getAddress();
+            //是否拒绝客户端连接
             if (maxClientCnxns > 0 && getClientCnxnCount(addr) >= maxClientCnxns) {
                 ServerMetrics.getMetrics().CONNECTION_REJECTED.add(1);
                 LOG.warn("Too many connections from {} - max is {}", addr, maxClientCnxns);
@@ -597,6 +599,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
         configureSaslLogin();
         initMaxCnxns();
         localAddress = addr;
+        //设置maxClientCnxns
         this.maxClientCnxns = maxClientCnxns;
         //netty可以定义ssl安全连接
         this.secure = secure;

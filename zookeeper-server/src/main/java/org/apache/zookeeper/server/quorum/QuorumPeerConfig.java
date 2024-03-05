@@ -313,6 +313,7 @@ public class QuorumPeerConfig {
                 //zk 基本时间单位，用于调节心跳和超时等
                 tickTime = Integer.parseInt(value);
             } else if (key.equals("maxClientCnxns")) {
+                //每个客户端最大连接数
                 maxClientCnxns = Integer.parseInt(value);
             } else if (key.equals("minSessionTimeout")) {
                 minSessionTimeout = Integer.parseInt(value);
