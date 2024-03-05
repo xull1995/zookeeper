@@ -300,8 +300,10 @@ public abstract class ServerCnxnFactory {
     }
 
     protected void initMaxCnxns() {
+        //
         maxCnxns = Integer.getInteger(ZOOKEEPER_MAX_CONNECTION, ZOOKEEPER_MAX_CONNECTION_DEFAULT);
         if (maxCnxns < 0) {
+            //最小值为0
             maxCnxns = ZOOKEEPER_MAX_CONNECTION_DEFAULT;
             LOG.warn("maxCnxns should be greater than or equal to 0, using default vlaue {}.",
                     ZOOKEEPER_MAX_CONNECTION_DEFAULT);
@@ -314,6 +316,7 @@ public abstract class ServerCnxnFactory {
     }
 
     /**
+     *
      * Ensure total number of connections are less than the maxCnxns
      */
     protected boolean limitTotalNumberOfCnxns() {

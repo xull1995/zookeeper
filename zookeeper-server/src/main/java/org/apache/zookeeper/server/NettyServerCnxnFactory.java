@@ -209,6 +209,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
             }
 
             final Channel channel = ctx.channel();
+            //判断是否需要限制客户端连接
             if (limitTotalNumberOfCnxns()) {
                 ServerMetrics.getMetrics().CONNECTION_REJECTED.add(1);
                 channel.close();
@@ -742,6 +743,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
     }
 
     private void addCnxn(final NettyServerCnxn cnxn) {
+        //
         cnxns.add(cnxn);
         InetAddress addr = ((InetSocketAddress) cnxn.getChannel().remoteAddress()).getAddress();
 

@@ -273,6 +273,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
             try {
                 sc = acceptSocket.accept();
                 accepted = true;
+                //
                 if (limitTotalNumberOfCnxns()) {
                     throw new IOException("Too many connections max allowed is " + maxCnxns);
                 }
@@ -380,6 +381,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                 while (!stopped) {
                     try {
                         select();
+                        //
                         processAcceptedConnections();
                         processInterestOpsUpdateRequests();
                     } catch (RuntimeException e) {
@@ -468,6 +470,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
                     key = accepted.register(selector, SelectionKey.OP_READ);
                     NIOServerCnxn cnxn = createConnection(accepted, key, this);
                     key.attach(cnxn);
+                    //
                     addCnxn(cnxn);
                 } catch (IOException e) {
                     // register, createConnection
@@ -831,6 +834,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         }
         set.add(cnxn);
 
+        //
         cnxns.add(cnxn);
         touchCnxn(cnxn);
     }
