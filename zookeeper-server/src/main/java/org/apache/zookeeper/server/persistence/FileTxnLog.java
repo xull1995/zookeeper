@@ -130,6 +130,7 @@ public class FileTxnLog implements TxnLog, Closeable {
         LOG = LoggerFactory.getLogger(FileTxnLog.class);
 
         /** Local variable to read fsync.warningthresholdms into */
+        //说明zookeeper.fsync.warningthresholdms参数配置的优先级高于fsync.warningthresholdms
         Long fsyncWarningThreshold;
         if ((fsyncWarningThreshold = Long.getLong(ZOOKEEPER_FSYNC_WARNING_THRESHOLD_MS_PROPERTY)) == null) {
             fsyncWarningThreshold = Long.getLong(FSYNC_WARNING_THRESHOLD_MS_PROPERTY, 1000);
@@ -401,12 +402,14 @@ public class FileTxnLog implements TxnLog, Closeable {
                 FileChannel channel = log.getChannel();
                 channel.force(false);
 
+                //同步耗时
                 syncElapsedMS = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startSyncNS);
                 if (syncElapsedMS > fsyncWarningThresholdMS) {
                     if (serverStats != null) {
                         serverStats.incrementFsyncThresholdExceedCount();
                     }
 
+                    //当出现这种日志，需要优化下，降低数据丢失可能性
                     LOG.warn(
                         "fsync-ing the write ahead log in {} took {}ms which will adversely effect operation latency."
                             + "File size is {} bytes. See the ZooKeeper troubleshooting guide",
