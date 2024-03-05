@@ -187,6 +187,7 @@ public class QuorumPeerMain {
             quorumPeer.setTickTime(config.getTickTime());
             //
             quorumPeer.setMinSessionTimeout(config.getMinSessionTimeout());
+            //
             quorumPeer.setMaxSessionTimeout(config.getMaxSessionTimeout());
             quorumPeer.setInitLimit(config.getInitLimit());
             quorumPeer.setSyncLimit(config.getSyncLimit());

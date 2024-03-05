@@ -1429,10 +1429,12 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         if (sessionTimeout < minSessionTimeout) {
             sessionTimeout = minSessionTimeout;
         }
+        //
         int maxSessionTimeout = getMaxSessionTimeout();
         if (sessionTimeout > maxSessionTimeout) {
             sessionTimeout = maxSessionTimeout;
         }
+        //说明sessionTimeout只能在[minSessionTimeout,maxSessionTimeout]区间内生效
         cnxn.setSessionTimeout(sessionTimeout);
         // We don't want to receive any packets until we are sure that the
         // session is setup

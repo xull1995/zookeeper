@@ -505,6 +505,7 @@ public class QuorumPeerConfig {
 
         //默认ickTime * 2
         minSessionTimeout = minSessionTimeout == -1 ? tickTime * 2 : minSessionTimeout;
+        //默认tickTime * 20
         maxSessionTimeout = maxSessionTimeout == -1 ? tickTime * 20 : maxSessionTimeout;
 
         if (minSessionTimeout > maxSessionTimeout) {
