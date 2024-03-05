@@ -326,6 +326,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         this.txnLogFactory.setServerStats(this.serverStats);
         this.zkDb = zkDb;
         this.tickTime = tickTime;
+        //
         setMinSessionTimeout(minSessionTimeout);
         setMaxSessionTimeout(maxSessionTimeout);
         this.listenBacklog = clientPortListenBacklog;
@@ -1423,6 +1424,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         }
         int sessionTimeout = connReq.getTimeOut();
         byte[] passwd = connReq.getPasswd();
+        //
         int minSessionTimeout = getMinSessionTimeout();
         if (sessionTimeout < minSessionTimeout) {
             sessionTimeout = minSessionTimeout;

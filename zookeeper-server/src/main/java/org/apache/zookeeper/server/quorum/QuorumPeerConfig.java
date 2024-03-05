@@ -316,6 +316,7 @@ public class QuorumPeerConfig {
                 //每个客户端最大连接数
                 maxClientCnxns = Integer.parseInt(value);
             } else if (key.equals("minSessionTimeout")) {
+                //
                 minSessionTimeout = Integer.parseInt(value);
             } else if (key.equals("maxSessionTimeout")) {
                 maxSessionTimeout = Integer.parseInt(value);
@@ -502,6 +503,7 @@ public class QuorumPeerConfig {
             throw new IllegalArgumentException("tickTime is not set");
         }
 
+        //默认ickTime * 2
         minSessionTimeout = minSessionTimeout == -1 ? tickTime * 2 : minSessionTimeout;
         maxSessionTimeout = maxSessionTimeout == -1 ? tickTime * 20 : maxSessionTimeout;
 
