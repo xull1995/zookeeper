@@ -41,6 +41,7 @@ public class ResponseCache {
 
     public ResponseCache(int cacheSize) {
         this.cacheSize = cacheSize;
+        //使用LRU 算法处理缓存
         cache = Collections.synchronizedMap(new LRUCache<>(cacheSize));
         LOG.info("Response cache size is initialized with value {}.", cacheSize);
     }

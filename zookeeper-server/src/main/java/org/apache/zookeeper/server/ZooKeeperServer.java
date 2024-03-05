@@ -1851,6 +1851,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     }
 
     public ResponseCache getGetChildrenResponseCache() {
+        //默认开启
         return isResponseCachingEnabled ? getChildrenResponseCache : null;
     }
 

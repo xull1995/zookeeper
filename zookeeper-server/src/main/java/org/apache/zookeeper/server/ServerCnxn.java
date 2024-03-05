@@ -217,6 +217,7 @@ public abstract class ServerCnxn implements Stats, Watcher {
                     break;
                 }
                 case OpCode.getChildren2 : {
+                    //缓存GetChildren操作
                     cache = zkServer.getGetChildrenResponseCache();
                     cacheHit = ServerMetrics.getMetrics().RESPONSE_PACKET_GET_CHILDREN_CACHE_HITS;
                     cacheMiss = ServerMetrics.getMetrics().RESPONSE_PACKET_GET_CHILDREN_CACHE_MISSING;
