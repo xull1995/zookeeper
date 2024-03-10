@@ -1964,6 +1964,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
      * @return
      */
     public boolean getSyncEnabled() {
+        //也可通过 zookeeper.observer.syncEnabled 系统属性 改变zoo.cfg中的syncEnabled配置
         if (System.getProperty(SYNC_ENABLED) != null) {
             LOG.info("{}={}", SYNC_ENABLED, Boolean.getBoolean(SYNC_ENABLED));
             return Boolean.getBoolean(SYNC_ENABLED);

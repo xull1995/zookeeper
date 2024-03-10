@@ -342,6 +342,7 @@ public class QuorumPeerConfig {
                     throw new ConfigException("Unrecognised peertype: " + value);
                 }
             } else if (key.equals("syncEnabled")) {
+                //默认true
                 syncEnabled = Boolean.parseBoolean(value);
             } else if (key.equals("dynamicConfigFile")) {
                 dynamicConfigFileStr = value;

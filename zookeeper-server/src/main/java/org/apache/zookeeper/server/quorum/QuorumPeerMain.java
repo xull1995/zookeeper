@@ -208,6 +208,7 @@ public class QuorumPeerMain {
             quorumPeer.setSslQuorum(config.isSslQuorum());
             quorumPeer.setUsePortUnification(config.shouldUsePortUnification());
             quorumPeer.setLearnerType(config.getPeerType());
+            //
             quorumPeer.setSyncEnabled(config.getSyncEnabled());
             quorumPeer.setQuorumListenOnAllIPs(config.getQuorumListenOnAllIPs());
             if (config.sslQuorumReloadCertFiles) {
