@@ -33,6 +33,9 @@ public class WatchManagerFactory {
     public static final String ZOOKEEPER_WATCH_MANAGER_NAME = "zookeeper.watchManagerName";
 
     public static IWatchManager createWatchManager() throws IOException {
+        //https://issues.apache.org/jira/browse/ZOOKEEPER-1179
+        //Currently, we only support WatchManager and WatchManagerOptimized
+        //当业务大量使用watch，会造成内存占用过高，通过WatchManagerOptimized可以优化该场景
         String watchManagerName = System.getProperty(ZOOKEEPER_WATCH_MANAGER_NAME);
         if (watchManagerName == null) {
             watchManagerName = WatchManager.class.getName();
