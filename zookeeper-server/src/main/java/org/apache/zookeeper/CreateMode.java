@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /***
+ * zk 支持哪些节点类型
  *  CreateMode value determines how the znode is created on ZooKeeper.
  */
 @InterfaceAudience.Public

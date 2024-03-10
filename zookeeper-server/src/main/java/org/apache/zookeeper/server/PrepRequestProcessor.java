@@ -962,6 +962,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements Req
     }
 
     private void validateCreateRequest(String path, CreateMode createMode, Request request, long ttl) throws KeeperException {
+        //当请求创建的节点是含TTL，但是没有配置zookeeper.extendedTypesEnabled，则直接抛出下面异常
         if (createMode.isTTL() && !EphemeralType.extendedEphemeralTypesEnabled()) {
             throw new KeeperException.UnimplementedException();
         }

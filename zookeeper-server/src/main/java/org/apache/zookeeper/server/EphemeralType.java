@@ -67,6 +67,7 @@ public enum EphemeralType {
      */
     VOID,
     /**
+     * EPHEMERAL 语义的节点类型
      * Standard, pre-3.5.x EPHEMERAL
      */
     NORMAL,
@@ -75,6 +76,7 @@ public enum EphemeralType {
      */
     CONTAINER,
     /**
+     * 含指定过期时间的临时节点类型
      * TTL node
      */
     TTL() {
@@ -155,10 +157,12 @@ public enum EphemeralType {
      * @return true/false
      */
     public static boolean extendedEphemeralTypesEnabled() {
+        //
         return Boolean.getBoolean(EXTENDED_TYPES_ENABLED_PROPERTY);
     }
 
     /**
+     * 确定
      * Convert a ZNode ephemeral owner to an ephemeral type. If extended types are not
      * enabled, VOID or NORMAL is always returned
      *
@@ -166,7 +170,9 @@ public enum EphemeralType {
      * @return type
      */
     public static EphemeralType get(long ephemeralOwner) {
+        //开启了zookeeper.extendedTypesEnabled
         if (extendedEphemeralTypesEnabled()) {
+            //兼容zk 3.5.3,即要是zk 版本是 3.5.3，想要该功能就需要配置zookeeper.emulate353TTLNodes
             if (Boolean.getBoolean(TTL_3_5_3_EMULATION_PROPERTY)) {
                 if (EphemeralTypeEmulate353.get(ephemeralOwner) == EphemeralTypeEmulate353.TTL) {
                     return TTL;
@@ -199,6 +205,7 @@ public enum EphemeralType {
         // TODO: however, for now, it would be too disruptive
 
         if (extendedEphemeralTypesEnabled()) {
+            //这里规定了server id(即myid)不能超过254,即可选范围是[0,254]
             if (serverId > EphemeralType.MAX_EXTENDED_SERVER_ID) {
                 throw new RuntimeException(
                     "extendedTypesEnabled is true but Server ID is too large. Cannot be larger than "
