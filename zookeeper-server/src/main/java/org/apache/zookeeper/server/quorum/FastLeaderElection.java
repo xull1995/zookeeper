@@ -74,11 +74,13 @@ public class FastLeaderElection implements Election {
     private static int minNotificationInterval = finalizeWait;
 
     /**
+     *
      * Minimum notification interval, default is equal to finalizeWait
      */
     public static final String MIN_NOTIFICATION_INTERVAL = "zookeeper.fastleader.minNotificationInterval";
 
     /**
+     *
      * Maximum notification interval, default is 60s
      */
     public static final String MAX_NOTIFICATION_INTERVAL = "zookeeper.fastleader.maxNotificationInterval";
@@ -955,6 +957,8 @@ public class FastLeaderElection implements Election {
 
             while ((self.getPeerState() == ServerState.LOOKING) && (!stop)) {
                 /*
+
+                //
                  * Remove next notification from queue, times out after 2 times
                  * the termination time
                  */
@@ -974,6 +978,7 @@ public class FastLeaderElection implements Election {
                     /*
                      * Exponential backoff
                      */
+                    //获取失败后,更新notTimeout，在两倍notTimeout和maxNotificationInterval，取最小值
                     int tmpTimeOut = notTimeout * 2;
                     notTimeout = Math.min(tmpTimeOut, maxNotificationInterval);
                     LOG.info("Notification time out: {}", notTimeout);
