@@ -75,6 +75,7 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
     }
 
     /**
+     * 最大 outstanding requests
      * The total number of outstanding requests allowed before the throttler
      * starts stalling.
      *
@@ -145,6 +146,7 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
                     continue;
                 }
 
+                //当开启后，则
                 // Throttling is disabled when maxRequests = 0
                 if (maxRequests > 0) {
                     while (!killed) {
@@ -155,9 +157,11 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
                             request = null;
                             break;
                         }
+                        //当前在处理的请求小于maxRequests，则跳出，否则进行等待
                         if (zks.getInProcess() < maxRequests) {
                             break;
                         }
+                        //
                         throttleSleep(stallTime);
                     }
                 }
