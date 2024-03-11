@@ -128,6 +128,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
         if ((flushDelay > 0) && (getRemainingDelay() == 0)) {
             return true;//需要刷盘
         }
+        //除了FlushDelay，当事务操作数超过maxBatchSize，则也需要执行刷盘
         return (maxBatchSize > 0) && (toFlush.size() >= maxBatchSize);
     }
 

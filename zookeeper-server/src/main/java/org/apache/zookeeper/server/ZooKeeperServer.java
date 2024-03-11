@@ -242,6 +242,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         setFlushDelay(configuredFlushDelay);
         //默认 configuredFlushDelay / 3
         setMaxWriteQueuePollTime(Long.getLong(MAX_WRITE_QUEUE_POLL_SIZE, configuredFlushDelay / 3));
+        //默认1000
         setMaxBatchSize(Integer.getInteger(MAX_BATCH_SIZE, 1000));
 
         intBufferStartingSizeBytes = Integer.getInteger(INT_BUFFER_STARTING_SIZE_BYTES, DEFAULT_STARTING_BUFFER_SIZE);
