@@ -237,6 +237,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     public static final String GET_CHILDREN_RESPONSE_CACHE_SIZE = "zookeeper.maxGetChildrenResponseCacheSize";
 
     static {
+        //默认0
         long configuredFlushDelay = Long.getLong(FLUSH_DELAY, 0);
         setFlushDelay(configuredFlushDelay);
         setMaxWriteQueuePollTime(Long.getLong(MAX_WRITE_QUEUE_POLL_SIZE, configuredFlushDelay / 3));

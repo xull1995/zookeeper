@@ -126,7 +126,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
         long flushDelay = zks.getFlushDelay();
         long maxBatchSize = zks.getMaxBatchSize();
         if ((flushDelay > 0) && (getRemainingDelay() == 0)) {
-            return true;
+            return true;//需要刷盘
         }
         return (maxBatchSize > 0) && (toFlush.size() >= maxBatchSize);
     }
@@ -164,6 +164,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
             while (true) {
                 ServerMetrics.getMetrics().SYNC_PROCESSOR_QUEUE_SIZE.add(queuedRequests.size());
 
+                //
                 long pollTime = Math.min(zks.getMaxWriteQueuePollTime(), getRemainingDelay());
                 Request si = queuedRequests.poll(pollTime, TimeUnit.MILLISECONDS);
                 if (si == null) {
