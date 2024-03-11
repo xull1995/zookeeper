@@ -47,6 +47,7 @@ public class Request {
 
     // Considers a request stale if the request latency is higher than its
     // associated session timeout. Disabled by default.
+
     private static volatile boolean staleLatencyCheck = Boolean.parseBoolean(System.getProperty("zookeeper.request_stale_latency_check", "false"));
 
     public Request(ServerCnxn cnxn, long sessionId, int xid, int type, ByteBuffer bb, List<Id> authInfo) {
@@ -175,6 +176,7 @@ public class Request {
         staleConnectionCheck = check;
     }
 
+    //判断是否过时
     public boolean isStale() {
         if (cnxn == null) {
             return false;
@@ -186,6 +188,7 @@ public class Request {
             return false;
         }
 
+        //检查连接是否过时
         if (staleConnectionCheck) {
             // If the connection is closed, consider the request stale.
             if (cnxn.isStale() || cnxn.isInvalid()) {
@@ -193,6 +196,7 @@ public class Request {
             }
         }
 
+        //检查请求是否已经过时
         if (staleLatencyCheck) {
             // If the request latency is higher than session timeout, consider
             // the request stale.
