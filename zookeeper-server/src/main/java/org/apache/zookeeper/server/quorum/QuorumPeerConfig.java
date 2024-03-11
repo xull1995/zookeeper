@@ -308,6 +308,7 @@ public class QuorumPeerConfig {
                 //
                 observerMasterPort = Integer.parseInt(value);
             } else if (key.equals("clientPortListenBacklog")) {
+                //参考：https://zhuanlan.zhihu.com/p/104874605
                 clientPortListenBacklog = Integer.parseInt(value);
             } else if (key.equals("tickTime")) {
                 //zk 基本时间单位，用于调节心跳和超时等
