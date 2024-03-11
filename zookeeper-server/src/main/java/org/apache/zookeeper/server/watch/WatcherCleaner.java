@@ -60,6 +60,7 @@ public class WatcherCleaner extends Thread {
     private final AtomicInteger totalDeadWatchers = new AtomicInteger();
 
     public WatcherCleaner(IDeadWatcherListener listener) {
+        //也是https://issues.apache.org/jira/browse/ZOOKEEPER-1179 引入的，
         this(
             listener,
             Integer.getInteger("zookeeper.watcherCleanThreshold", 1000),
@@ -72,6 +73,7 @@ public class WatcherCleaner extends Thread {
         this.listener = listener;
         this.watcherCleanThreshold = watcherCleanThreshold;
         this.watcherCleanIntervalInSeconds = watcherCleanIntervalInSeconds;
+        //校验 maxInProcessingDeadWatchers 用户配置是的是否合理
         int suggestedMaxInProcessingThreshold = watcherCleanThreshold * watcherCleanThreadsNum;
         if (maxInProcessingDeadWatchers > 0 && maxInProcessingDeadWatchers < suggestedMaxInProcessingThreshold) {
             maxInProcessingDeadWatchers = suggestedMaxInProcessingThreshold;
@@ -128,6 +130,7 @@ public class WatcherCleaner extends Thread {
         while (!stopped) {
             synchronized (cleanEvent) {
                 try {
+                    //
                     // add some jitter to avoid cleaning dead watchers at the
                     // same time in the quorum
                     if (!stopped && deadWatchers.size() < watcherCleanThreshold) {

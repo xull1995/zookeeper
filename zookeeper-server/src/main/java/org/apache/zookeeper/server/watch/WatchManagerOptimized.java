@@ -171,6 +171,8 @@ public class WatchManagerOptimized implements IWatchManager, IDeadWatcherListene
         // And moving the addDeadWatcher out of the locking block to avoid
         // holding the write lock while we're blocked on adding dead watchers
         // into the watcherCleaner.
+
+        //
         watcherCleaner.addDeadWatcher(watcherBit);
     }
 
