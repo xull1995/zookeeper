@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class ServerCnxnFactory {
 
+    //
     public static final String ZOOKEEPER_SERVER_CNXN_FACTORY = "zookeeper.serverCnxnFactory";
     private static final String ZOOKEEPER_MAX_CONNECTION = "zookeeper.maxCnxns";
     public static final int ZOOKEEPER_MAX_CONNECTION_DEFAULT = 0;
@@ -160,6 +161,7 @@ public abstract class ServerCnxnFactory {
     public static ServerCnxnFactory createFactory() throws IOException {
         String serverCnxnFactoryName = System.getProperty(ZOOKEEPER_SERVER_CNXN_FACTORY);
         if (serverCnxnFactoryName == null) {
+            //默认
             serverCnxnFactoryName = NIOServerCnxnFactory.class.getName();
         }
         try {
