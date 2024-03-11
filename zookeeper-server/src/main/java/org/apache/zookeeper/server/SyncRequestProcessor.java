@@ -164,12 +164,14 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
             while (true) {
                 ServerMetrics.getMetrics().SYNC_PROCESSOR_QUEUE_SIZE.add(queuedRequests.size());
 
-                //
+                //在flushDelay和maxWriteQueuePollTime之间，取最小poll时间
                 long pollTime = Math.min(zks.getMaxWriteQueuePollTime(), getRemainingDelay());
                 Request si = queuedRequests.poll(pollTime, TimeUnit.MILLISECONDS);
                 if (si == null) {
+                    //指定时间内没有同步请求，则立即执行刷盘
                     /* We timed out looking for more writes to batch, go ahead and flush immediately */
                     flush();
+                    //阻塞等待
                     si = queuedRequests.take();
                 }
 
