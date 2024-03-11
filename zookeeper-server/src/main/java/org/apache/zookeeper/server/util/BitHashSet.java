@@ -61,6 +61,7 @@ public class BitHashSet implements Iterable<Integer> {
     private int elementCount = 0;
 
     public BitHashSet() {
+        //
         this(Integer.getInteger("zookeeper.bitHashCacheSize", 10));
     }
 
@@ -72,6 +73,7 @@ public class BitHashSet implements Iterable<Integer> {
         if (elementBit == null || elementBits.get(elementBit)) {
             return false;
         }
+        //缓存
         if (cache.size() < cacheSize) {
             cache.add(elementBit);
         }

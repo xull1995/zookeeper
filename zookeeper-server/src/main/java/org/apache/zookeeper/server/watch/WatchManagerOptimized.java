@@ -193,6 +193,7 @@ public class WatchManagerOptimized implements IWatchManager, IDeadWatcherListene
         // The value iterator will reflect the state when it was
         // created, don't need to synchronize.
         for (BitHashSet watchers : pathWatches.values()) {
+            //
             watchers.remove(deadWatchers, bits);
         }
         // Better to remove the empty path from pathWatches, but it will add
