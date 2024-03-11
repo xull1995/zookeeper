@@ -143,9 +143,11 @@ public class BlueThrottle {
     }
 
     static {
+        //默认0
         int tokens = Integer.getInteger(CONNECTION_THROTTLE_TOKENS, 0);
         int fillCount = Integer.getInteger(CONNECTION_THROTTLE_FILL_COUNT, 1);
 
+        //默认false
         connectionWeightEnabled = Boolean.getBoolean(WEIGHED_CONNECTION_THROTTLE);
 
         // if not specified, the weights for a global session, a local session, and a renew session
@@ -191,6 +193,8 @@ public class BlueThrottle {
         }
 
         // This is based on the assumption that tokens set in config are for global sessions
+        //默认参数下，DEFAULT_CONNECTION_THROTTLE_TOKENS=0
+        //当开启connectionWeightEnabled，则DEFAULT_CONNECTION_THROTTLE_TOKENS计算方式会改变
         DEFAULT_CONNECTION_THROTTLE_TOKENS = connectionWeightEnabled
                 ? DEFAULT_GLOBAL_SESSION_WEIGHT * tokens : tokens;
         DEFAULT_CONNECTION_THROTTLE_FILL_TIME = Integer.getInteger(CONNECTION_THROTTLE_FILL_TIME, 1);
@@ -315,7 +319,9 @@ public class BlueThrottle {
         return BlueThrottle.connectionWeightEnabled;
     }
 
+    //是否需要限流
     public synchronized boolean checkLimit(int need) {
+        //zookeeper.connection_throttle_tokens表示不开启限流
         // A maxTokens setting of zero disables throttling
         if (maxTokens == 0) {
             return true;
@@ -324,12 +330,14 @@ public class BlueThrottle {
         long now = Time.currentElapsedTime();
         long diff = now - lastTime;
 
+        //满足条件，说明需要填充令牌
         if (diff > fillTime) {
             int refill = (int) (diff * fillCount / fillTime);
             tokens = Math.min(tokens + refill, maxTokens);
             lastTime = now;
         }
 
+        //
         // A freeze time of -1 disables BLUE randomized throttling
         if (freezeTime != -1) {
             if (!checkBlue(now)) {

@@ -254,6 +254,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         LOG.info("{} = {}", INT_BUFFER_STARTING_SIZE_BYTES, intBufferStartingSizeBytes);
     }
 
+    //连接限流
     // Connection throttling
     private BlueThrottle connThrottle = new BlueThrottle();
 
@@ -1375,6 +1376,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
 
         long sessionId = connReq.getSessionId();
         int tokensNeeded = 1;
+        //是否开启
         if (connThrottle.isConnectionWeightEnabled()) {
             if (sessionId == 0) {
                 if (localSessionEnabled) {
@@ -1387,6 +1389,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             }
         }
 
+        //
         if (!connThrottle.checkLimit(tokensNeeded)) {
             throw new ClientCnxnLimitException();
         }
