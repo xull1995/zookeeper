@@ -251,6 +251,8 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
         stopping = true;
         submittedRequests.add(Request.requestOfDeath);
         try {
+            //是主线程等待子线程的终止。也就是说主线程的代码块中，如果碰到了t.join()方法，
+            // 此时主线程需要等待（阻塞），等待子线程结束了(Waits for this thread to die.),才能继续执行t.join()之后的代码块。
             this.join(shutdownTimeout);
         } catch (InterruptedException e) {
             LOG.warn("Interrupted while waiting for {} to finish", this);
