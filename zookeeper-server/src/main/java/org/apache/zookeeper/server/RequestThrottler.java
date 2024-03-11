@@ -90,6 +90,7 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
     private static volatile int stallTime = Integer.getInteger("zookeeper.request_throttle_stall_time", 100);
 
     /**
+     *
      * When true, the throttler will drop stale requests rather than issue
      * them to the request pipeline. A stale request is a request sent by
      * a connection that is now closed, and/or a request that will have a
@@ -150,6 +151,7 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
                 // Throttling is disabled when maxRequests = 0
                 if (maxRequests > 0) {
                     while (!killed) {
+                        //dropStaleRequests默认开启，如何定义请求是 stale,在request.isStale()有定义
                         if (dropStaleRequests && request.isStale()) {
                             // Note: this will close the connection
                             dropRequest(request);
