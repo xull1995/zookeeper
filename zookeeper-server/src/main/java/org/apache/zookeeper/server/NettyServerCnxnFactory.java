@@ -117,7 +117,6 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
     int listenBacklog = -1;
     private final ClientX509Util x509Util;
 
-    //https://issues.apache.org/jira/browse/ZOOKEEPER-3356
     public static final String NETTY_ADVANCED_FLOW_CONTROL = "zookeeper.netty.advancedFlowControl.enabled";
     private boolean advancedFlowControlEnabled = false;
 
@@ -312,17 +311,14 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
                     if (cnxn != null) {
                         if (cnxn.getQueuedReadableBytes() > 0) {
                             cnxn.processQueuedBuffer();
-                            //
                             if (advancedFlowControlEnabled && cnxn.getQueuedReadableBytes() == 0) {
                                 // trigger a read if we have consumed all
                                 // backlog
-                                //再读一次
                                 ctx.read();
                                 LOG.debug("Issued a read after queuedBuffer drained");
                             }
                         }
                     }
-                    //
                     if (!advancedFlowControlEnabled) {
                         ctx.channel().config().setAutoRead(true);
                     }
@@ -360,7 +356,6 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
 
         @Override
         public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-            //
             if (advancedFlowControlEnabled) {
                 NettyServerCnxn cnxn = ctx.channel().attr(CONNECTION_ATTRIBUTE).get();
                 if (cnxn != null && cnxn.getQueuedReadableBytes() == 0 && cnxn.readIssuedAfterReadComplete == 0) {
@@ -537,7 +532,6 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
                                                              @Override
                                                              protected void initChannel(SocketChannel ch) throws Exception {
                                                                  ChannelPipeline pipeline = ch.pipeline();
-                                                                 //开启后，则netty pipeline中添加ReadIssuedTrackingHandler
                                                                  if (advancedFlowControlEnabled) {
                                                                      pipeline.addLast(readIssuedTrackingHandler);
                                                                  }

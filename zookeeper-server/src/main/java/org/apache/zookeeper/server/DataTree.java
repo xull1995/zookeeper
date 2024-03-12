@@ -636,7 +636,6 @@ public class DataTree {
 
         updateWriteStat(path, 0L);
 
-        //处理删除节点的事件记录
         if (LOG.isTraceEnabled()) {
             ZooTrace.logTraceMessage(
                 LOG,

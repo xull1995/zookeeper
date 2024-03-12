@@ -692,10 +692,7 @@ public class NIOServerCnxn extends ServerCnxn {
     @Override
     public void process(WatchedEvent event) {
         ReplyHeader h = new ReplyHeader(ClientCnxn.NOTIFICATION_XID, -1L, 0);
-        //当日志级别为trace
         if (LOG.isTraceEnabled()) {
-            //且设置了EVENT_DELIVERY_TRACE_MASK
-            //则记录watch推送日志信息，可用于排查某个watch事件是否推送给某个客户端sessionId
             ZooTrace.logTraceMessage(
                 LOG,
                 ZooTrace.EVENT_DELIVERY_TRACE_MASK,

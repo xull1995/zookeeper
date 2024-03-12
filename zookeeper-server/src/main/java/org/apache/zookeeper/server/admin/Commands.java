@@ -497,8 +497,6 @@ public class Commands {
     }
 
     /**
-     * 相关使用介绍；https://zookeeper.apache.org/doc/current/zookeeperAdmin.html#sc_adminserver，
-     * 在4lw中，定义了Trace Mask Bit Values	，比如想要记录wacth事件，可以设置 traceMask=0b0001000000
      * Sets the trace mask. Required arguments:
      *   - "traceMask": Long
      *  Returned Map contains:
