@@ -100,6 +100,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     public static final String ENABLE_EAGER_ACL_CHECK = "zookeeper.enableEagerACLCheck";
     public static final String SKIP_ACL = "zookeeper.skipACL";
 
+    //
     // When enabled, will check ACL constraints appertained to the requests first,
     // before sending the requests to the quorum.
     static boolean enableEagerACLCheck;
@@ -2114,6 +2115,8 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         int err;
         String pathToCheck;
 
+        //默认不开启，即不会在请求写入到quorum前进行auth校验
+        //开启后，则当前节点需要先进行acl check,通过后才能提交到quorum
         if (!enableEagerACLCheck) {
             return true;
         }

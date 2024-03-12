@@ -64,6 +64,7 @@ public class FollowerRequestProcessor extends ZooKeeperCriticalThread implements
                     break;
                 }
 
+                //
                 // Screen quorum requests against ACLs first
                 if (!zks.authWriteRequest(request)) {
                     continue;
