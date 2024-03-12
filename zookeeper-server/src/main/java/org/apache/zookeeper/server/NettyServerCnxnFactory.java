@@ -117,6 +117,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
     int listenBacklog = -1;
     private final ClientX509Util x509Util;
 
+    //https://issues.apache.org/jira/browse/ZOOKEEPER-3356
     public static final String NETTY_ADVANCED_FLOW_CONTROL = "zookeeper.netty.advancedFlowControl.enabled";
     private boolean advancedFlowControlEnabled = false;
 
