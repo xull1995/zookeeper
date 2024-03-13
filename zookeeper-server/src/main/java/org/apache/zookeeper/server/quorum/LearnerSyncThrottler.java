@@ -82,9 +82,11 @@ public class LearnerSyncThrottler {
     protected void beginSync(boolean essential) throws SyncThrottleException, InterruptedException {
 
         synchronized (countSyncObject) {
+            //需要注意essential，目前仅observer需要
             if (essential || syncInProgress < maxConcurrentSyncs) {
                 syncInProgress++;
             } else {
+                //超过，需要抛异常
                 throw new SyncThrottleException(syncInProgress + 1, maxConcurrentSyncs, syncType);
             }
         }

@@ -546,15 +546,18 @@ public class LearnerHandler extends ZooKeeperThread {
 
             // Take any necessary action if we need to send TRUNC or DIFF
             // startForwarding() will be called in all cases
+            //这里进行判断follower与leader需要那种数据同步方式，是全量同步，还是同步差异
             boolean needSnap = syncFollower(peerLastZxid, learnerMaster);
 
             // syncs between followers and the leader are exempt from throttling because it
             // is importatnt to keep the state of quorum servers up-to-date. The exempted syncs
             // are counted as concurrent syncs though
+            //这里说明仅仅是对OBSERVER进行限制， FOLLOWER不做限制
             boolean exemptFromThrottle = getLearnerType() != LearnerType.OBSERVER;
             /* if we are not truncating or sending a diff just send a snapshot */
-            if (needSnap) {
+            if (needSnap) {//需要leader 通过快照同步所有数据
                 syncThrottler = learnerMaster.getLearnerSnapSyncThrottler();
+                //对于observer节点，限制最大并发同步快照数量，
                 syncThrottler.beginSync(exemptFromThrottle);
                 ServerMetrics.getMetrics().INFLIGHT_SNAP_COUNT.add(syncThrottler.getSyncInProgress());
                 try {
@@ -563,6 +566,7 @@ public class LearnerHandler extends ZooKeeperThread {
                     messageTracker.trackSent(Leader.SNAP);
                     bufferedOutput.flush();
 
+                    //日志会提示是否需要 throttle
                     LOG.info(
                         "Sending snapshot last zxid of peer is 0x{}, zxid of leader is 0x{}, "
                             + "send zxid of db as 0x{}, {} concurrent snapshot sync, "
@@ -581,6 +585,7 @@ public class LearnerHandler extends ZooKeeperThread {
                 }
             } else {
                 syncThrottler = learnerMaster.getLearnerDiffSyncThrottler();
+                //对于diff ，限制最大并发发送diff包
                 syncThrottler.beginSync(exemptFromThrottle);
                 ServerMetrics.getMetrics().INFLIGHT_DIFF_COUNT.add(syncThrottler.getSyncInProgress());
                 ServerMetrics.getMetrics().DIFF_COUNT.add(1);
@@ -622,6 +627,7 @@ public class LearnerHandler extends ZooKeeperThread {
 
             syncLimitCheck.start();
             // sync ends when NEWLEADER-ACK is received
+            //结束同步
             syncThrottler.endSync();
             if (needSnap) {
                 ServerMetrics.getMetrics().INFLIGHT_SNAP_COUNT.add(syncThrottler.getSyncInProgress());

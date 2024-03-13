@@ -34,6 +34,7 @@ public abstract class LearnerMaster {
 
     private static final Logger LOG = LoggerFactory.getLogger(LearnerMaster.class);
 
+    //限制
     // Throttle when there are too many concurrent snapshots being sent to observers
     private static final String MAX_CONCURRENT_SNAPSYNCS = "zookeeper.leader.maxConcurrentSnapSyncs";
     private static final int DEFAULT_CONCURRENT_SNAPSYNCS;
@@ -43,9 +44,11 @@ public abstract class LearnerMaster {
     private static final int DEFAULT_CONCURRENT_DIFF_SYNCS;
 
     static {
+        //默认10
         DEFAULT_CONCURRENT_SNAPSYNCS = Integer.getInteger(MAX_CONCURRENT_SNAPSYNCS, 10);
         LOG.info("{} = {}", MAX_CONCURRENT_SNAPSYNCS, DEFAULT_CONCURRENT_SNAPSYNCS);
 
+        //默认100
         DEFAULT_CONCURRENT_DIFF_SYNCS = Integer.getInteger(MAX_CONCURRENT_DIFF_SYNCS, 100);
         LOG.info("{} = {}", MAX_CONCURRENT_DIFF_SYNCS, DEFAULT_CONCURRENT_DIFF_SYNCS);
     }
@@ -53,8 +56,10 @@ public abstract class LearnerMaster {
     private volatile int maxConcurrentSnapSyncs = DEFAULT_CONCURRENT_SNAPSYNCS;
     private volatile int maxConcurrentDiffSyncs = DEFAULT_CONCURRENT_DIFF_SYNCS;
 
+    //
     private final LearnerSyncThrottler learnerSnapSyncThrottler = new LearnerSyncThrottler(maxConcurrentSnapSyncs, LearnerSyncThrottler.SyncType.SNAP);
 
+    //
     private final LearnerSyncThrottler learnerDiffSyncThrottler = new LearnerSyncThrottler(maxConcurrentDiffSyncs, LearnerSyncThrottler.SyncType.DIFF);
 
     public int getMaxConcurrentSnapSyncs() {
