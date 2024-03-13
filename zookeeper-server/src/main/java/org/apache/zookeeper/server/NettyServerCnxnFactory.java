@@ -102,6 +102,8 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
 
     public void setOutstandingHandshakeLimit(int limit) {
         outstandingHandshakeLimit = limit;
+        //决定是否需要限制 handshake
+        // 需要这三个参数都设置才可以
         handshakeThrottlingEnabled = (secure || shouldUsePortUnification) && outstandingHandshakeLimit > 0;
         LOG.info("handshakeThrottlingEnabled = {}, {} = {}",
                 handshakeThrottlingEnabled, OUTSTANDING_HANDSHAKE_LIMIT, outstandingHandshakeLimit);
@@ -518,6 +520,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
         this.advancedFlowControlEnabled = Boolean.getBoolean(NETTY_ADVANCED_FLOW_CONTROL);
         LOG.info("{} = {}", NETTY_ADVANCED_FLOW_CONTROL, this.advancedFlowControlEnabled);
 
+        //默认-1
         setOutstandingHandshakeLimit(Integer.getInteger(OUTSTANDING_HANDSHAKE_LIMIT, -1));
 
         EventLoopGroup bossGroup = NettyUtils.newNioOrEpollEventLoopGroup(NettyUtils.getClientReachableLocalInetAddressCount());
