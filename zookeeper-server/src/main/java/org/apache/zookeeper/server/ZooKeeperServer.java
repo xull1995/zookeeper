@@ -134,6 +134,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             LOG.info("{}==\"yes\", ACL checks will be skipped", SKIP_ACL);
         }
 
+        //默认值
         digestEnabled = Boolean.parseBoolean(System.getProperty(ZOOKEEPER_DIGEST_ENABLED, "true"));
         LOG.info("{} = {}", ZOOKEEPER_DIGEST_ENABLED, digestEnabled);
 
