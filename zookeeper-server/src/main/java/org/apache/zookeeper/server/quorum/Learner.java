@@ -316,6 +316,7 @@ public class Learner {
         ExecutorService executor = Executors.newFixedThreadPool(addresses.size());
         CountDownLatch latch = new CountDownLatch(addresses.size());
         AtomicReference<Socket> socket = new AtomicReference<>(null);
+        //
         addresses.stream().map(address -> new LeaderConnector(address, socket, latch)).forEach(executor::submit);
 
         try {
@@ -387,19 +388,21 @@ public class Learner {
         private Socket connectToLeader() throws IOException, X509Exception, InterruptedException {
             Socket sock = createSocket();
 
-            //
+            //默认是使用initLimit
             // leader connection timeout defaults to tickTime * initLimit
             int connectTimeout = self.tickTime * self.initLimit;
 
             // but if connectToLearnerMasterLimit is specified, use that value to calculate
             // timeout instead of using the initLimit value
             if (self.connectToLearnerMasterLimit > 0) {
+                //使用用户自定义的
                 connectTimeout = self.tickTime * self.connectToLearnerMasterLimit;
             }
 
             int remainingTimeout;
             long startNanoTime = nanoTime();
 
+            //重试5次
             for (int tries = 0; tries < 5 && socket.get() == null; tries++) {
                 try {
                     // recalculate the init limit time because retries sleep for 1000 milliseconds
