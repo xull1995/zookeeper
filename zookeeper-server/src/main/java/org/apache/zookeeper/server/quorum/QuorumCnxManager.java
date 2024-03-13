@@ -316,6 +316,7 @@ public class QuorumCnxManager {
         this.senderWorkerMap = new ConcurrentHashMap<>();
         this.lastMessageSent = new ConcurrentHashMap<>();
 
+        //
         String cnxToValue = System.getProperty("zookeeper.cnxTimeout");
         if (cnxToValue != null) {
             this.cnxTO = Integer.parseInt(cnxToValue);
@@ -380,6 +381,7 @@ public class QuorumCnxManager {
                 sock = SOCKET_FACTORY.get();
             }
             setSockOpts(sock);
+            //超时时间
             sock.connect(electionAddr.getReachableOrOne(), cnxTO);
             if (sock instanceof SSLSocket) {
                 SSLSocket sslSock = (SSLSocket) sock;
@@ -454,6 +456,7 @@ public class QuorumCnxManager {
         @Override
         public void run() {
             try {
+                //
                 initiateConnection(electionAddr, sid);
             } finally {
                 inprogressConnections.remove(sid);
