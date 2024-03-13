@@ -456,6 +456,7 @@ public class LearnerHandler extends ZooKeeperThread {
     public void run() {
         try {
             learnerMaster.addLearnerHandler(this);
+            //
             tickOfNextAckDeadline = learnerMaster.getTickOfInitialAckDeadline();
 
             ia = BinaryInputArchive.getArchive(bufferedInput);
@@ -636,6 +637,7 @@ public class LearnerHandler extends ZooKeeperThread {
             }
             syncThrottler = null;
 
+            // 设置tickTime * syncLimit
             // now that the ack has been processed expect the syncLimit
             sock.setSoTimeout(learnerMaster.syncTimeout());
 

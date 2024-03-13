@@ -257,6 +257,7 @@ public class Leader extends LearnerMaster {
     }
 
     /**
+     *
      * Returns true if a quorum in qv is connected and synced with the leader
      * and false otherwise
      *
@@ -269,6 +270,7 @@ public class Leader extends LearnerMaster {
         }
         synchronized (forwardingFollowers) {
             for (LearnerHandler learnerHandler : forwardingFollowers) {
+                //
                 if (learnerHandler.synced() && qv.getVotingMembers().containsKey(learnerHandler.getSid())) {
                     ids.add(learnerHandler.getSid());
                 }
@@ -509,6 +511,7 @@ public class Leader extends LearnerMaster {
                 try {
                     socket = serverSocket.accept();
 
+                    //连接的时候使用 tickTime * initLimit
                     // start with the initLimit, once the ack is processed
                     // in LearnerHandler switch to the syncLimit
                     socket.setSoTimeout(self.tickTime * self.initLimit);
@@ -749,6 +752,7 @@ public class Leader extends LearnerMaster {
                     syncedAckSet.addAck(self.getId());
 
                     for (LearnerHandler f : getLearners()) {
+                        //
                         if (f.synced()) {
                             syncedAckSet.addAck(f.getSid());
                         }

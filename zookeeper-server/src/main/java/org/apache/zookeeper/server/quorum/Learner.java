@@ -387,6 +387,7 @@ public class Learner {
         private Socket connectToLeader() throws IOException, X509Exception, InterruptedException {
             Socket sock = createSocket();
 
+            //
             // leader connection timeout defaults to tickTime * initLimit
             int connectTimeout = self.tickTime * self.initLimit;
 

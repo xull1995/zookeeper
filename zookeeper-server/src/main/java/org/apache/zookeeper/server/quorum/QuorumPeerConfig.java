@@ -824,9 +824,11 @@ public class QuorumPeerConfig {
 
     public void checkValidity() throws IOException, ConfigException {
         if (isDistributed()) {
+            //zoo.cfg中不可不填
             if (initLimit == 0) {
                 throw new IllegalArgumentException("initLimit is not set");
             }
+            //zoo.cfg中不可不填
             if (syncLimit == 0) {
                 throw new IllegalArgumentException("syncLimit is not set");
             }
