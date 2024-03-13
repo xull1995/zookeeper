@@ -530,6 +530,7 @@ public class QuorumPeerConfig {
             if (isDistributed() && isReconfigEnabled()) {
                 // we don't backup static config for standalone mode.
                 // we also don't backup if reconfig feature is disabled.
+                //启动就备份
                 backupOldConfig();
             }
         }
