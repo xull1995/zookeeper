@@ -214,6 +214,7 @@ public class FastLeaderElection implements Election {
     protected class Messenger {
 
         /**
+         * 网络包接收线程
          * Receives messages from instance of QuorumCnxManager on
          * method run(), and processes such messages.
          */
@@ -435,11 +436,12 @@ public class FastLeaderElection implements Election {
                                  */
                                 Vote current = self.getCurrentVote();
                                 if (ackstate == QuorumPeer.ServerState.LOOKING) {
-                                    if (self.leader != null) {
+                                    if (self.leader != null) {//自己是leader，但收到了投票的请求
                                         if (leadingVoteSet != null) {
                                             self.leader.setLeadingVoteSet(leadingVoteSet);
                                             leadingVoteSet = null;
                                         }
+                                        //
                                         self.leader.reportLookingSid(response.sid);
                                     }
 

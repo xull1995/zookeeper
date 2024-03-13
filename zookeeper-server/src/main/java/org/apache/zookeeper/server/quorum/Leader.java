@@ -1350,6 +1350,7 @@ public class Leader extends LearnerMaster {
     private static int maxTimeToWaitForEpoch;
 
     static {
+        //默认-1
         maxTimeToWaitForEpoch = Integer.getInteger(MAX_TIME_TO_WAIT_FOR_EPOCH, -1);
         LOG.info("{} = {}ms", MAX_TIME_TO_WAIT_FOR_EPOCH, maxTimeToWaitForEpoch);
     }
@@ -1384,13 +1385,16 @@ public class Leader extends LearnerMaster {
         this.voteSet = voteSet;
     }
 
+    //
     public void reportLookingSid(long sid) {
+        //默认maxTimeToWaitForEpoch -1
         if (maxTimeToWaitForEpoch < 0 || timeStartWaitForEpoch < 0 || !waitingForNewEpoch) {
             return;
         }
         if (voteSet == null || !voteSet.hasSid(sid)) {
             return;
         }
+        //退出leader身份
         if (Time.currentElapsedTime() - timeStartWaitForEpoch > maxTimeToWaitForEpoch) {
             quitLeading();
         }
