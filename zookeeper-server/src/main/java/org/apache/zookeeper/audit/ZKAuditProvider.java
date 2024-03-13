@@ -33,6 +33,7 @@ public class ZKAuditProvider {
     private static AuditLogger auditLogger;
 
     static {
+        //默认不开启
         auditEnabled = Boolean.getBoolean(AUDIT_ENABLE);
         if (auditEnabled) {
             //initialise only when audit logging is enabled
@@ -46,6 +47,7 @@ public class ZKAuditProvider {
     private static AuditLogger getAuditLogger() {
         String auditLoggerClass = System.getProperty(AUDIT_IMPL_CLASS);
         if (auditLoggerClass == null) {
+            //默认实现
             auditLoggerClass = Log4jAuditLogger.class.getName();
         }
         try {
@@ -102,6 +104,7 @@ public class ZKAuditProvider {
      */
     public static void addZKStartStopAuditLog() {
         if (isAuditEnabled()) {
+            //记录启动、停止日志
             log(getZKUser(), AuditConstants.OP_START, Result.SUCCESS);
             Runtime.getRuntime().addShutdownHook(new Thread(() -> {
                 log(getZKUser(), AuditConstants.OP_STOP, Result.INVOKED);
@@ -114,6 +117,7 @@ public class ZKAuditProvider {
      */
     public static void addServerStartFailureAuditLog() {
         if (isAuditEnabled()) {
+            //记录启动失败日志
             log(ZKAuditProvider.getZKUser(), AuditConstants.OP_START, Result.FAILURE);
         }
     }

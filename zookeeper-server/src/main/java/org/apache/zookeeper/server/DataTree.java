@@ -1187,6 +1187,7 @@ public class DataTree {
                     "Ignoring NoNodeException for path {} while removing ephemeral for dead session {}",
                         path, sessionHex);
             }
+            //记录删除操作日志
             if (ZKAuditProvider.isAuditEnabled()) {
                 if (deleted) {
                     ZKAuditProvider.log(ZKAuditProvider.getZKUser(),
