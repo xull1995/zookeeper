@@ -705,6 +705,7 @@ public class Leader extends LearnerMaster {
                 zk.setZxid((zk.getZxid() & 0xffffffff00000000L) | zxid);
             }
 
+            //默认 yes
             if (!System.getProperty("zookeeper.leaderServes", "yes").equals("no")) {
                 self.setZooKeeperServer(zk);
             }
