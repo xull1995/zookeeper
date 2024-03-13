@@ -952,6 +952,7 @@ public class QuorumPeerConfig {
     }
 
     public boolean isDistributed() {
+        //是否是单机还是集群版的zk
         return quorumVerifier != null && (!standaloneEnabled || quorumVerifier.getVotingMembers().size() > 1);
     }
 
