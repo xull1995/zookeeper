@@ -116,6 +116,7 @@ public class Learner {
     private static final boolean nodelay = System.getProperty("follower.nodelay", "true").equals("true");
 
     public static final String LEARNER_ASYNC_SENDING = "zookeeper.learner.asyncSending";
+    //默认false
     private static boolean asyncSending =
         Boolean.parseBoolean(ConfigUtils.getPropertyBackwardCompatibleWay(LEARNER_ASYNC_SENDING));
     static {
@@ -181,6 +182,7 @@ public class Learner {
      */
     void writePacket(QuorumPacket pp, boolean flush) throws IOException {
         if (asyncSending) {
+            //入队
             sender.queuePacket(pp);
         } else {
             writePacketNow(pp, flush);
@@ -342,6 +344,7 @@ public class Learner {
         leaderIs = BinaryInputArchive.getArchive(new BufferedInputStream(sock.getInputStream()));
         bufferedOutput = new BufferedOutputStream(sock.getOutputStream());
         leaderOs = BinaryOutputArchive.getArchive(bufferedOutput);
+        //启动一个异步线程
         if (asyncSending) {
             startSendingThread();
         }

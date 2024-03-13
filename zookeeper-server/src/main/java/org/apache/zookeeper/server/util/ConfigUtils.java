@@ -111,6 +111,7 @@ public class ConfigUtils {
         if (newKeyValue != null) {
             return newKeyValue.trim();
         }
+        //目前做了参数兼容处理，这里逻辑没啥用了
         String oldPropertyKey = newPropertyKey.replace("zookeeper.", "");
         String oldKeyValue = System.getProperty(oldPropertyKey);
 
