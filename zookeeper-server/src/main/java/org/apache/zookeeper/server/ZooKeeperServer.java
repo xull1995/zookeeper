@@ -1518,6 +1518,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     }
 
     private void initLargeRequestThrottlingSettings() {
+        //默认
         setLargeRequestMaxBytes(Integer.getInteger("zookeeper.largeRequestMaxBytes", largeRequestMaxBytes));
         setLargeRequestThreshold(Integer.getInteger("zookeeper.largeRequestThreshold", -1));
     }
@@ -1554,6 +1555,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         return currentLargeRequestBytes.get();
     }
 
+    //判断请求是否超过largeRequestThreshold
     private boolean isLargeRequest(int length) {
         // The large request limit is disabled when threshold is -1
         if (largeRequestThreshold == -1) {
@@ -1566,6 +1568,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         if (!isLargeRequest(length)) {
             return true;
         }
+        //判断超过largeRequestMaxBytes
         if (currentLargeRequestBytes.get() + length <= largeRequestMaxBytes) {
             return true;
         } else {
@@ -1670,6 +1673,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             } else {
                 Request si = new Request(cnxn, cnxn.getSessionId(), h.getXid(), h.getType(), incomingBuffer, cnxn.getAuthInfo());
                 int length = incomingBuffer.limit();
+                //超过，则拒绝
                 if (isLargeRequest(length)) {
                     // checkRequestSize will throw IOException if request is rejected
                     checkRequestSizeWhenMessageReceived(length);
