@@ -100,6 +100,7 @@ public class QuorumPeerConfig {
     protected int connectToLearnerMasterLimit;
     protected int electionAlg = 3;
     protected int electionPort = 2182;
+    //默认false
     protected boolean quorumListenOnAllIPs = false;
 
     protected long serverId = UNSET_SERVERID;
