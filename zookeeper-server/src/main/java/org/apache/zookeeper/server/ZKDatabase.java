@@ -285,6 +285,7 @@ public class ZKDatabase {
     public long loadDataBase() throws IOException {
         long startTime = Time.currentElapsedTime();
         long zxid = snapLog.restore(dataTree, sessionsWithTimeouts, commitProposalPlaybackListener);
+        //标记初始化完成
         initialized = true;
         long loadTime = Time.currentElapsedTime() - startTime;
         ServerMetrics.getMetrics().DB_INIT_TIME.add(loadTime);
@@ -608,6 +609,7 @@ public class ZKDatabase {
             return false;
         }
 
+        //
         loadDataBase();
         return true;
     }

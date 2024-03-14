@@ -590,6 +590,7 @@ public class Leader extends LearnerMaster {
         try {
             self.setZabState(QuorumPeer.ZabState.DISCOVERY);
             self.tick.set(0);
+            //
             zk.loadData();
 
             leaderStateSummary = new StateSummary(self.getCurrentEpoch(), zk.getLastProcessedZxid());

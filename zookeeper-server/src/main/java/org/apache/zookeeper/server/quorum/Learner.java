@@ -569,6 +569,7 @@ public class Learner {
                 LOG.info("Getting a snapshot from leader 0x{}", Long.toHexString(qp.getZxid()));
                 // The leader is going to dump the database
                 // db is clear as part of deserializeSnapshot()
+                //
                 zk.getZKDatabase().deserializeSnapshot(leaderIs);
                 // ZOOKEEPER-2819: overwrite config node content extracted
                 // from leader snapshot with local config, to avoid potential

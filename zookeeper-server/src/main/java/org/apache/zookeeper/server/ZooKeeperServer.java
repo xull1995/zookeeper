@@ -510,6 +510,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         if (zkDb.isInitialized()) {
             setZxid(zkDb.getDataTreeLastProcessedZxid());
         } else {
+            //未初始化
             setZxid(zkDb.loadDataBase());
         }
 

@@ -172,6 +172,7 @@ public class FileTxnSnapLog {
         txnLog = new FileTxnLog(this.dataDir);
         snapLog = new FileSnap(this.snapDir);
 
+        //默认true
         autoCreateDB = Boolean.parseBoolean(
             System.getProperty(ZOOKEEPER_DB_AUTOCREATE, ZOOKEEPER_DB_AUTOCREATE_DEFAULT));
     }
@@ -254,6 +255,7 @@ public class FileTxnSnapLog {
      */
     public long restore(DataTree dt, Map<Long, Integer> sessions, PlayBackListener listener) throws IOException {
         long snapLoadingStartTime = Time.currentElapsedTime();
+        //
         long deserializeResult = snapLog.deserialize(dt, sessions);
         ServerMetrics.getMetrics().STARTUP_SNAP_LOAD_TIME.add(Time.currentElapsedTime() - snapLoadingStartTime);
         FileTxnLog txnLog = new FileTxnLog(dataDir);
@@ -263,6 +265,7 @@ public class FileTxnSnapLog {
             LOG.info("Initialize file found, an empty database will not block voting participation");
             trustEmptyDB = true;
         } else {
+            //
             trustEmptyDB = autoCreateDB;
         }
 
@@ -303,9 +306,11 @@ public class FileTxnSnapLog {
                  *       or use Map on save() */
                 save(dt, (ConcurrentHashMap<Long, Integer>) sessions, false);
 
+                //返回0，表示容忍没有database
                 /* return a zxid of 0, since we know the database is empty */
                 return 0L;
             } else {
+                //返回-1，表示可能出现数据丢失
                 /* return a zxid of -1, since we are possibly missing data */
                 LOG.warn("Unexpected empty data tree, setting zxid to -1");
                 dt.lastProcessedZxid = -1L;
