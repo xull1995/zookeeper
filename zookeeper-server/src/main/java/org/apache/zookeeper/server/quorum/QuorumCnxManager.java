@@ -905,6 +905,7 @@ public class QuorumCnxManager {
     public class Listener extends ZooKeeperThread {
 
         private static final String ELECTION_PORT_BIND_RETRY = "zookeeper.electionPortBindRetry";
+        //默认3
         private static final int DEFAULT_PORT_BIND_MAX_RETRY = 3;
 
         private final int portBindMaxRetry;
@@ -1064,6 +1065,7 @@ public class QuorumCnxManager {
                 int numRetries = 0;
                 Socket client = null;
 
+                //重试
                 while ((!shutdown) && (portBindMaxRetry == 0 || numRetries < portBindMaxRetry)) {
                     try {
                         serverSocket = createNewServerSocket();
