@@ -129,6 +129,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
         enableEagerACLCheck = Boolean.getBoolean(ENABLE_EAGER_ACL_CHECK);
         LOG.info("{} = {}", ENABLE_EAGER_ACL_CHECK, enableEagerACLCheck);
 
+        //默认no,skipACL=false
         skipACL = System.getProperty(SKIP_ACL, "no").equals("yes");
         if (skipACL) {
             LOG.info("{}==\"yes\", ACL checks will be skipped", SKIP_ACL);

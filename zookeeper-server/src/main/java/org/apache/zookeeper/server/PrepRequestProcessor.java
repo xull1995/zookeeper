@@ -678,6 +678,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements Req
         List<ACL> listACL = fixupACL(path, request.authInfo, acl);
         ChangeRecord parentRecord = getRecordForPath(parentPath);
 
+        //acl check
         zks.checkACL(request.cnxn, parentRecord.acl, ZooDefs.Perms.CREATE, request.authInfo, path, listACL);
         int parentCVersion = parentRecord.stat.getCversion();
         if (createMode.isSequential()) {
