@@ -340,6 +340,7 @@ public class QuorumPeerConfig {
             } else if (key.equals("quorumListenOnAllIPs")) {
                 quorumListenOnAllIPs = Boolean.parseBoolean(value);
             } else if (key.equals("peerType")) {
+                //节点类型
                 if (value.toLowerCase().equals("observer")) {
                     peerType = LearnerType.OBSERVER;
                 } else if (value.toLowerCase().equals("participant")) {
