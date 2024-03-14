@@ -143,6 +143,8 @@ public abstract class X509Util implements Closeable, AutoCloseable {
         }
     }
 
+    //getConfigPrefix()分为 客户端和服务端，客户端前缀是zookeeper.ssl.‘服务端前缀是zookeeper.ssl.quorum.
+
     private String sslProtocolProperty = getConfigPrefix() + "protocol";
     private String sslEnabledProtocolsProperty = getConfigPrefix() + "enabledProtocols";
     private String cipherSuitesProperty = getConfigPrefix() + "ciphersuites";

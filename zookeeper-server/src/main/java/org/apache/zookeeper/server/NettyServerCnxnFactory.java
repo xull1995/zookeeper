@@ -433,8 +433,10 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
                         return;
                     }
 
+                    //默认x509
                     String authProviderProp = System.getProperty(x509Util.getSslAuthProviderProperty(), "x509");
 
+                    //找X509AuthenticationProvider的实现类
                     X509AuthenticationProvider authProvider = (X509AuthenticationProvider) ProviderRegistry.getProvider(authProviderProp);
 
                     if (authProvider == null) {
@@ -502,6 +504,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
         }
     }
 
+    //仅测试调用
     NettyServerCnxnFactory() {
         x509Util = new ClientX509Util();
 
@@ -540,6 +543,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
                                                                      pipeline.addLast(readIssuedTrackingHandler);
                                                                  }
                                                                  if (secure) {
+                                                                     //
                                                                      initSSL(pipeline, false);
                                                                  } else if (shouldUsePortUnification) {
                                                                      initSSL(pipeline, true);
@@ -572,6 +576,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
         }
 
         if (supportPlaintext) {
+            //
             p.addLast("ssl", new DualModeSslHandler(nettySslContext));
             LOG.debug("dual mode SSL handler added for channel: {}", p.channel());
         } else {

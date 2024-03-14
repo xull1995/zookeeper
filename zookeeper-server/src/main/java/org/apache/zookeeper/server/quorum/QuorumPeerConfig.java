@@ -556,6 +556,7 @@ public class QuorumPeerConfig {
         try (ClientX509Util clientX509Util = new ClientX509Util()) {
             String sslAuthProp = ProviderRegistry.AUTHPROVIDER_PROPERTY_PREFIX
                                  + System.getProperty(clientX509Util.getSslAuthProviderProperty(), "x509");
+
             if (System.getProperty(sslAuthProp) == null) {
                 if ((ProviderRegistry.AUTHPROVIDER_PROPERTY_PREFIX + "x509").equals(sslAuthProp)) {
                     System.setProperty(ProviderRegistry.AUTHPROVIDER_PROPERTY_PREFIX + "x509",

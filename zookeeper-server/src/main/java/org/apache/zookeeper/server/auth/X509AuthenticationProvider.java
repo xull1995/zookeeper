@@ -66,6 +66,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
     public X509AuthenticationProvider() throws X509Exception {
         ZKConfig config = new ZKConfig();
         try (X509Util x509Util = new ClientX509Util()) {
+            //
             String keyStoreLocation = config.getProperty(x509Util.getSslKeystoreLocationProperty(), "");
             String keyStorePassword = config.getProperty(x509Util.getSslKeystorePasswdProperty(), "");
             String keyStoreTypeProp = config.getProperty(x509Util.getSslKeystoreTypeProperty());
