@@ -78,6 +78,7 @@ public class LeaderZooKeeperServer extends QuorumZooKeeperServer {
     }
 
     private synchronized void setupContainerManager() {
+        //
         containerManager = new ContainerManager(
             getZKDatabase(),
             prepRequestProcessor,
