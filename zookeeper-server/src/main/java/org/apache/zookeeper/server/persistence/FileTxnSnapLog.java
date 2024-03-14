@@ -117,6 +117,7 @@ public class FileTxnSnapLog {
 
         // by default create snap/log dirs, but otherwise complain instead
         // See ZOOKEEPER-1161 for more details
+        //默认true
         boolean enableAutocreate = Boolean.parseBoolean(
             System.getProperty(ZOOKEEPER_DATADIR_AUTOCREATE, ZOOKEEPER_DATADIR_AUTOCREATE_DEFAULT));
 
@@ -125,6 +126,7 @@ public class FileTxnSnapLog {
         LOG.info("{} : {}", ZOOKEEPER_SNAPSHOT_TRUST_EMPTY, trustEmptySnapshot);
 
         if (!this.dataDir.exists()) {
+            //当文件夹不存在，且不支持enableAutocreate，则抛出异常
             if (!enableAutocreate) {
                 throw new DatadirException(String.format(
                     "Missing data directory %s, automatic data directory creation is disabled (%s is false)."
