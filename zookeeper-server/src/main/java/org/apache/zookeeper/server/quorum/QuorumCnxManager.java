@@ -854,6 +854,7 @@ public class QuorumCnxManager {
      */
     private void setSockOpts(Socket sock) throws SocketException {
         sock.setTcpNoDelay(true);
+        //默认false
         sock.setKeepAlive(tcpKeepAlive);
         //套接字在等待数据时的超时时间
         sock.setSoTimeout(this.socketTimeout);
