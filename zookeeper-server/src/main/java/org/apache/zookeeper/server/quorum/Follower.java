@@ -142,6 +142,7 @@ public class Follower extends Learner {
 
             if (connectionTime != 0) {
                 long connectionDuration = System.currentTimeMillis() - connectionTime;
+                //与leader断开连接时，记录收发消息，便于排查问题
                 LOG.info(
                     "Disconnected from leader (with address: {}). Was connected for {}ms. Sync state: {}",
                     leaderAddr,
