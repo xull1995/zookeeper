@@ -410,8 +410,10 @@ public class QuorumPeerConfig {
             } else if (key.equals(JvmPauseMonitor.JVM_PAUSE_MONITOR_FEATURE_SWITCH_KEY)) {
                 jvmPauseMonitorToRun = Boolean.parseBoolean(value);
             } else if (key.equals("metricsProvider.className")) {
+                //监控实现类
                 metricsProviderClassName = value;
             } else if (key.startsWith("metricsProvider.")) {
+                //metricsProvider前缀的
                 String keyForMetricsProvider = key.substring(16);
                 metricsProviderConfiguration.put(keyForMetricsProvider, value);
             } else if (key.equals("multiAddress.enabled")) {
