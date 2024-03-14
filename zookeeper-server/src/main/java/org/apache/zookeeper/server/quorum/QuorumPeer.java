@@ -1453,6 +1453,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
                         setObserver(null);
                         updateServerState();
 
+                        //等待leader选举，到这里时，说明当前leader没了
                         // Add delay jitter before we switch to LOOKING
                         // state to reduce the load of ObserverMaster
                         if (isRunning()) {
@@ -2305,6 +2306,7 @@ public class QuorumPeer extends ZooKeeperThread implements QuorumStats.Provider 
         if (useObserverMasters()) {
             return nextObserverMaster();
         } else {
+            //一般是减轻leader 刚被选举时的压力
             // Add delay jitter to reduce the load on the leader
             if (isRunning()) {
                 Observer.waitForReconnectDelay();

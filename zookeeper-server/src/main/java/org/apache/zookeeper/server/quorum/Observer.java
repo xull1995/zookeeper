@@ -68,8 +68,10 @@ public class Observer extends Learner {
     private static volatile long observerElectionDelayMs;
 
     static {
+        //默认0
         reconnectDelayMs = Long.getLong(OBSERVER_RECONNECT_DELAY_MS, 0);
         LOG.info("{} = {}", OBSERVER_RECONNECT_DELAY_MS, reconnectDelayMs);
+        //默认200
         observerElectionDelayMs = Long.getLong(OBSERVER_ELECTION_DELAY_MS, 200);
         LOG.info("{} = {}", OBSERVER_ELECTION_DELAY_MS , observerElectionDelayMs);
     }
