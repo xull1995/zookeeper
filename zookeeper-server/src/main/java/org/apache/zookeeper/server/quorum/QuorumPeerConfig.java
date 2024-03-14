@@ -352,6 +352,7 @@ public class QuorumPeerConfig {
                 //默认true
                 syncEnabled = Boolean.parseBoolean(value);
             } else if (key.equals("dynamicConfigFile")) {
+                //
                 dynamicConfigFileStr = value;
             } else if (key.equals("autopurge.snapRetainCount")) {
                 //
