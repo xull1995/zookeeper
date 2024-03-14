@@ -239,11 +239,13 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements RequestP
                  */
                 Request request;
                 int readsProcessed = 0;
+                //
                 while (!stopped
                        && requestsToProcess > 0
                        && (maxReadBatchSize < 0 || readsProcessed <= maxReadBatchSize)
                        && (request = queuedRequests.poll()) != null) {
                     requestsToProcess--;
+
                     if (needCommit(request) || pendingRequests.containsKey(request.sessionId)) {
                         // Add request to pending
                         Deque<Request> requests = pendingRequests.computeIfAbsent(request.sessionId, sid -> new ArrayDeque<>());
@@ -430,7 +432,9 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements RequestP
     @Override
     public void start() {
         int numCores = Runtime.getRuntime().availableProcessors();
+        //
         int numWorkerThreads = Integer.getInteger(ZOOKEEPER_COMMIT_PROC_NUM_WORKER_THREADS, numCores);
+        //
         workerShutdownTimeoutMS = Long.getLong(ZOOKEEPER_COMMIT_PROC_SHUTDOWN_TIMEOUT, 5000);
 
         initBatchSizes();
@@ -464,7 +468,9 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements RequestP
     }
 
     private static void initBatchSizes() {
+        //
         maxReadBatchSize = Integer.getInteger(ZOOKEEPER_COMMIT_PROC_MAX_READ_BATCH_SIZE, -1);
+        //默认1，即一个个提交
         maxCommitBatchSize = Integer.getInteger(ZOOKEEPER_COMMIT_PROC_MAX_COMMIT_BATCH_SIZE, 1);
 
         if (maxCommitBatchSize <= 0) {
