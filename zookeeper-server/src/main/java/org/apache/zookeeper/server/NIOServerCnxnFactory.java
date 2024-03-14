@@ -99,6 +99,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         }
 
         /**
+         * 改为0表示禁止使用缓冲区
          * Value of 0 disables use of direct buffers and instead uses
          * gathered write call.
          *
@@ -643,6 +644,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
         //设置maxClientCnxns
         maxClientCnxns = maxcc;
         initMaxCnxns();
+        //10s
         sessionlessCnxnTimeout = Integer.getInteger(ZOOKEEPER_NIO_SESSIONLESS_CNXN_TIMEOUT, 10000);
         // We also use the sessionlessCnxnTimeout as expiring interval for
         // cnxnExpiryQueue. These don't need to be the same, but the expiring
@@ -653,6 +655,7 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
 
         int numCores = Runtime.getRuntime().availableProcessors();
         // 32 cores sweet spot seems to be 4 selector threads
+        //最小值1
         numSelectorThreads = Integer.getInteger(
             ZOOKEEPER_NIO_NUM_SELECTOR_THREADS,
             Math.max((int) Math.sqrt((float) numCores / 2), 1));
@@ -660,7 +663,9 @@ public class NIOServerCnxnFactory extends ServerCnxnFactory {
             throw new IOException("numSelectorThreads must be at least 1");
         }
 
+        //
         numWorkerThreads = Integer.getInteger(ZOOKEEPER_NIO_NUM_WORKER_THREADS, 2 * numCores);
+        //5s
         workerShutdownTimeoutMS = Long.getLong(ZOOKEEPER_NIO_SHUTDOWN_TIMEOUT, 5000);
 
         String logMsg = "Configuring NIO connection handler with "
