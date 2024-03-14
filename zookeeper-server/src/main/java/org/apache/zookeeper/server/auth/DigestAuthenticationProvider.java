@@ -96,6 +96,7 @@ public class DigestAuthenticationProvider implements AuthenticationProvider {
         String id = new String(authData);
         try {
             String digest = generateDigest(id);
+            //超级用户
             if (digest.equals(superDigest)) {
                 cnxn.addAuthInfo(new Id("super", ""));
             }
