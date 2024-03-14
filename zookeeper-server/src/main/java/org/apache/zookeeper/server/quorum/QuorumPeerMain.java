@@ -179,7 +179,9 @@ public class QuorumPeerMain {
             quorumPeer = getQuorumPeer();
             //设置快照存储目录dataDir和事务日志存储目录DataLogDir
             quorumPeer.setTxnFactory(new FileTxnSnapLog(config.getDataLogDir(), config.getDataDir()));
+            //
             quorumPeer.enableLocalSessions(config.areLocalSessionsEnabled());
+            //
             quorumPeer.enableLocalSessionsUpgrading(config.isLocalSessionsUpgradingEnabled());
             //quorumPeer.setQuorumPeers(config.getAllMembers());
             quorumPeer.setElectionType(config.getElectionAlg());

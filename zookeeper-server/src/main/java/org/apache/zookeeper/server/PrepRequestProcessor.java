@@ -877,6 +877,7 @@ public class PrepRequestProcessor extends ZooKeeperCriticalThread implements Req
             //create/close session don't require request record
             case OpCode.createSession:
             case OpCode.closeSession:
+                //本地Session,则不做后续处理，没必要通知quorum
                 if (!request.isLocalSession()) {
                     pRequest2Txn(request.type, zks.getNextZxid(), request, null, true);
                 }

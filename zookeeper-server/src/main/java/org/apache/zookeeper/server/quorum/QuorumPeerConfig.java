@@ -88,7 +88,9 @@ public class QuorumPeerConfig {
     protected int maxSessionTimeout = -1;
     protected String metricsProviderClassName = DefaultMetricsProvider.class.getName();
     protected Properties metricsProviderConfiguration = new Properties();
+    //默认
     protected boolean localSessionsEnabled = false;
+    //默认
     protected boolean localSessionsUpgradingEnabled = false;
     /** defaults to -1 if not set explicitly */
     protected int clientPortListenBacklog = -1;

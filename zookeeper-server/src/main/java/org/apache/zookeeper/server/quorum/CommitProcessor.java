@@ -182,6 +182,7 @@ public class CommitProcessor extends ZooKeeperCriticalThread implements RequestP
             return matchSyncs;
         case OpCode.createSession:
         case OpCode.closeSession:
+            //本地会话，不需要提交
             return !request.isLocalSession();
         default:
             return false;
