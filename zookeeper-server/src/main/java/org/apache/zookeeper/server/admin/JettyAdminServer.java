@@ -82,6 +82,7 @@ public class JettyAdminServer implements AdminServer {
 
     public JettyAdminServer() throws AdminServerException, IOException, GeneralSecurityException {
         this(
+                //配置admin server
             System.getProperty("zookeeper.admin.serverAddress", DEFAULT_ADDRESS),
             Integer.getInteger("zookeeper.admin.serverPort", DEFAULT_PORT),
             Integer.getInteger("zookeeper.admin.idleTimeout", DEFAULT_IDLE_TIMEOUT),
