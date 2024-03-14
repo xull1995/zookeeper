@@ -153,6 +153,7 @@ public class FileTxnLog implements TxnLog, Closeable {
     volatile FileOutputStream fos = null;
 
     File logDir;
+    //默认值 yes，forceSync是true
     private final boolean forceSync = !System.getProperty("zookeeper.forceSync", "yes").equals("no");
     long dbId;
     private final Queue<FileOutputStream> streamsToFlush = new ArrayDeque<>();
@@ -396,6 +397,7 @@ public class FileTxnLog implements TxnLog, Closeable {
         }
         for (FileOutputStream log : streamsToFlush) {
             log.flush();
+            //commit时，
             if (forceSync) {
                 long startSyncNS = System.nanoTime();
 
