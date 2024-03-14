@@ -128,8 +128,10 @@ public class QuorumPeerConfig {
     // multi address related configs
     private boolean multiAddressEnabled = Boolean.parseBoolean(
         System.getProperty(QuorumPeer.CONFIG_KEY_MULTI_ADDRESS_ENABLED, QuorumPeer.CONFIG_DEFAULT_MULTI_ADDRESS_ENABLED));
+    //默认开启
     private boolean multiAddressReachabilityCheckEnabled =
         Boolean.parseBoolean(System.getProperty(QuorumPeer.CONFIG_KEY_MULTI_ADDRESS_REACHABILITY_CHECK_ENABLED, "true"));
+    //默认1000
     private int multiAddressReachabilityCheckTimeoutMs =
         Integer.parseInt(System.getProperty(QuorumPeer.CONFIG_KEY_MULTI_ADDRESS_REACHABILITY_CHECK_TIMEOUT_MS,
                                             String.valueOf(MultipleAddresses.DEFAULT_TIMEOUT.toMillis())));
