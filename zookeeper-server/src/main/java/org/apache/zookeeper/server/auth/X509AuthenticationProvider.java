@@ -155,6 +155,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
 
         String clientId = getClientId(clientCert);
 
+        //
         if (clientId.equals(System.getProperty(ZOOKEEPER_X509AUTHENTICATIONPROVIDER_SUPERUSER))) {
             cnxn.addAuthInfo(new Id("super", clientId));
             LOG.info("Authenticated Id '{}' as super user", clientId);
@@ -183,6 +184,7 @@ public class X509AuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean matches(String id, String aclExpr) {
+        //
         if (System.getProperty(ZOOKEEPER_X509AUTHENTICATIONPROVIDER_SUPERUSER) != null) {
             return id.equals(System.getProperty(ZOOKEEPER_X509AUTHENTICATIONPROVIDER_SUPERUSER))
                    || id.equals(aclExpr);
