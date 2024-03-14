@@ -1723,6 +1723,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
                     String authorizationID = saslServer.getAuthorizationID();
                     LOG.info("adding SASL authorization for authorizationID: {}", authorizationID);
                     cnxn.addAuthInfo(new Id("sasl", authorizationID));
+                    //说明在开启sasl认证下，配置超级管理员
                     if (System.getProperty("zookeeper.superUser") != null
                         && authorizationID.equals(System.getProperty("zookeeper.superUser"))) {
                         cnxn.addAuthInfo(new Id("super", ""));
