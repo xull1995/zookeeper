@@ -197,6 +197,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     public static final int DEFAULT_TICK_TIME = 3000;
     protected int tickTime = DEFAULT_TICK_TIME;
     public static final int DEFAULT_THROTTLED_OP_WAIT_TIME = 0; // disabled
+    //默认禁用
     protected static volatile int throttledOpWaitTime =
         Integer.getInteger("zookeeper.throttled_op_wait_time", DEFAULT_THROTTLED_OP_WAIT_TIME);
     /** value of -1 indicates unset, use default */

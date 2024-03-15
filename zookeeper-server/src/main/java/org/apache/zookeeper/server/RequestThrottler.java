@@ -98,9 +98,12 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
      */
     private static volatile boolean dropStaleRequests = Boolean.parseBoolean(System.getProperty("zookeeper.request_throttle_drop_stale", "true"));
 
+    //是否需要限流
     protected boolean shouldThrottleOp(Request request, long elapsedTime) {
+        //isThrottlable(),ping和 session创建关闭不可以限流，
         return request.isThrottlable()
                 && ZooKeeperServer.getThrottledOpWaitTime() > 0
+                //是否以及超过约定等待时间
                 && elapsedTime > ZooKeeperServer.getThrottledOpWaitTime();
     }
 
@@ -179,8 +182,10 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
                     if (request.isStale()) {
                         ServerMetrics.getMetrics().STALE_REQUESTS.add(1);
                     }
+                    //计算从请求加入submittedRequests队列中，到这里取出，共计耗时多久
                     final long elapsedTime = Time.currentElapsedTime() - request.requestThrottleQueueTime;
                     ServerMetrics.getMetrics().REQUEST_THROTTLE_QUEUE_TIME.add(elapsedTime);
+                    //是否需要限流
                     if (shouldThrottleOp(request, elapsedTime)) {
                       request.setIsThrottled(true);
                       ServerMetrics.getMetrics().THROTTLED_OPS.add(1);
@@ -242,6 +247,7 @@ public class RequestThrottler extends ZooKeeperCriticalThread {
             LOG.debug("Shutdown in progress. Request cannot be processed");
             dropRequest(request);
         } else {
+            //设置requestThrottleQueueTime
             request.requestThrottleQueueTime = Time.currentElapsedTime();
             submittedRequests.add(request);
         }
