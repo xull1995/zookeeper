@@ -703,8 +703,10 @@ public class LearnerHandler extends ZooKeeperThread {
                     bb = bb.slice();
                     Request si;
                     if (type == OpCode.sync) {
+                        //
                         si = new LearnerSyncRequest(this, sessionId, cxid, type, RequestRecord.fromBytes(bb), qp.getAuthinfo());
                     } else {
+                        //op 不是 同步的
                         si = new Request(null, sessionId, cxid, type, RequestRecord.fromBytes(bb), qp.getAuthinfo());
                     }
                     si.setOwner(this);

@@ -67,18 +67,22 @@ public class ProposalRequestProcessor implements RequestProcessor {
 
     public void processRequest(Request request) throws RequestProcessorException {
         /* In the following IF-THEN-ELSE block, we process syncs on the leader.
+         *
          * If the sync is coming from a follower, then the follower
          * handler adds it to syncHandler. Otherwise, if it is a client of
          * the leader that issued the sync command, then syncHandler won't
          * contain the handler. In this case, we add it to syncHandler, and
          * call processRequest on the next processor.
          */
+        //需要同步的
         if (request instanceof LearnerSyncRequest) {
             zks.getLeader().processSync((LearnerSyncRequest) request);
         } else {
+            //是否需要转到下一个Processor
             if (shouldForwardToNextProcessor(request)) {
                 nextProcessor.processRequest(request);
             }
+            //对于会改变数据内容的请求或者事务请求，zk会在request头部增加一个TxnHeader。
             if (request.getHdr() != null) {
                 // We need to sync and get consensus on any transactions
                 try {
@@ -98,6 +102,7 @@ public class ProposalRequestProcessor implements RequestProcessor {
     }
 
     private boolean shouldForwardToNextProcessor(Request request) {
+        //
         if (!forwardLearnerRequestsToCommitProcessorDisabled) {
             return true;
         }
