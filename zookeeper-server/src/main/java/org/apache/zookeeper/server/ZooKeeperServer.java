@@ -166,6 +166,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
                 System.getProperty(CLOSE_SESSION_TXN_ENABLED, "true"));
         LOG.info("{} = {}", CLOSE_SESSION_TXN_ENABLED, closeSessionTxnEnabled);
 
+        //默认true
         setSerializeLastProcessedZxidEnabled(Boolean.parseBoolean(
                 System.getProperty(ZOOKEEPER_SERIALIZE_LAST_PROCESSED_ZXID_ENABLED, "true")));
     }
