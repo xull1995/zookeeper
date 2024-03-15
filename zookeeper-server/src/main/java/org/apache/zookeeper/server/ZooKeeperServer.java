@@ -153,6 +153,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
             LOG.info("{}==\"yes\", ACL checks will be skipped", SKIP_ACL);
         }
 
+        //默认false
         enforceQuota = Boolean.parseBoolean(System.getProperty(ENFORCE_QUOTA, "false"));
         if (enforceQuota) {
             LOG.info("{} = {}, Quota Enforce enables", ENFORCE_QUOTA, enforceQuota);
@@ -2118,6 +2119,7 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     }
 
     /**
+     * 检查quota
      * check a path whether exceeded the quota.
      *
      * @param path
