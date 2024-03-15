@@ -227,6 +227,7 @@ public class NettyServerCnxnFactory extends ServerCnxnFactory {
             // Check the zkServer assigned to the cnxn is still running,
             // close it before starting the heavy TLS handshake
             if (secure && !cnxn.isZKServerRunning()) {
+                //默认false
                 boolean earlyDropSecureConnectionHandshakes = Boolean.getBoolean(EARLY_DROP_SECURE_CONNECTION_HANDSHAKES);
                 if (earlyDropSecureConnectionHandshakes) {
                     LOG.info("Zookeeper server is not running, close the connection to {} before starting the TLS handshake",
