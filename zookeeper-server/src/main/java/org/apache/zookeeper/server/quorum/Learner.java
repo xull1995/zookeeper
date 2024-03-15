@@ -123,6 +123,7 @@ public class Learner {
     private static boolean asyncSending =
         Boolean.parseBoolean(ConfigUtils.getPropertyBackwardCompatibleWay(LEARNER_ASYNC_SENDING));
     public static final String LEARNER_CLOSE_SOCKET_ASYNC = "zookeeper.learner.closeSocketAsync";
+    //默认false
     public static final boolean closeSocketAsync = Boolean
         .parseBoolean(ConfigUtils.getPropertyBackwardCompatibleWay(LEARNER_CLOSE_SOCKET_ASYNC));
 
@@ -902,6 +903,7 @@ public class Learner {
     void closeSocket() {
         if (sock != null) {
             if (sockBeingClosed.compareAndSet(false, true)) {
+                //
                 if (closeSocketAsync) {
                     final Thread closingThread = new Thread(() -> closeSockSync(), "CloseSocketThread(sid:" + zk.getServerId());
                     closingThread.setDaemon(true);

@@ -1153,6 +1153,7 @@ public class LearnerHandler extends ZooKeeperThread {
 
     void closeSocket() {
         if (sock != null && !sock.isClosed() && sockBeingClosed.compareAndSet(false, true)) {
+            //
             if (closeSocketAsync) {
                 LOG.info("Asynchronously closing socket to learner {}.", getSid());
                 closeSockAsync();
