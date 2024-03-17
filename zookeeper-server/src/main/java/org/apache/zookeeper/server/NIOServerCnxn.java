@@ -104,6 +104,7 @@ public class NIOServerCnxn extends ServerCnxn {
         sock.socket().setTcpNoDelay(true);
         /* set socket linger to false, so that socket close does not block */
         sock.socket().setSoLinger(false, -1);
+        //对客户端的连接，增加Tcp KeepAlive，用于解决客户端发送FIN包丢失，服务端不关闭连接，导致资源泄露
         sock.socket().setKeepAlive(clientTcpKeepAlive);
         InetAddress addr = ((InetSocketAddress) sock.socket().getRemoteSocketAddress()).getAddress();
         addAuthInfo(new Id("ip", addr.getHostAddress()));
